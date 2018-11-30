@@ -95,12 +95,13 @@ require([
        * mosque popup template
        **************************************************/
 		var mosqueTemplate = {
-			title:"{Name}",
-			content: "<b>Address:</b> {Address}<br>"+
-				"<b>Open Date:</b> {OpenDate}<br>"+
-				"<b>Close Date:</b> {CloseDate}<br>"+ 
-				"<b>Primary Ethnicity:</b> {PrimaryEthnicity}<br>"
-		};
+		 title:"{Name}",
+		 content: "<b>Address:</b> {Address}<br>"+
+		   "<b>Open Date:</b> {OpenDate}<br>"+
+		   "<b>Close Date:</b> {CloseDate}<br>"+ 
+		   "<b>Primary Ethnicity:</b> {PrimaryEthnicity}<br>"+
+		   "<button id={Link} type='button'>Click Here To Learn More</button><br>"
+		 };
 
       /**************************************************
        * Layers depicting mosques
