@@ -1,0 +1,21 @@
+ html,
+ body,
+ #viewDiv {
+	padding: 0;
+    margin: 0;
+    height: 90%;
+    width: 95%;
+	float: right;
+}
+
+#homeDiv {
+    left: 15px;
+    top: 130px;
+    z-index: 35;
+    position: absolute;
+}
+#filterOptions{
+	position: fixed;
+	bottom: 0;
+	left: 0;
+}
