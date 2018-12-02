@@ -8,7 +8,9 @@ require([
 
 		var mosquesUrl =
         "https://services9.arcgis.com/DC7lz0T9RX9VsXbK/arcgis/rest/services/filtertest/FeatureServer";
-      
+		
+		var countiesUrl =
+		"https://services9.arcgis.com/DC7lz0T9RX9VsXbK/arcgis/rest/services/counties_v17a/FeatureServer"
 
 		// sets extent to the area wanted
 		var greaterDetroit = { // autocasts as new Extent()
@@ -90,6 +92,9 @@ require([
 				useSymbolValue: true // sets the width
 			}]
 		};
+		//var countiesRenderer = {
+			
+		//}
 	  
 	  /**************************************************
        * mosque popup template
@@ -123,6 +128,13 @@ require([
 			},
 			unit: "meters"
 		});   
+		
+		/*var countiesLayer = new FeatureLayer({
+			url: countiesUrl,
+			outFields["*"],
+			renderer: countiesRenderer,
+			
+		});*/
 
       /********************************************************************
        * Create a map with the above defined layers and a topographic
