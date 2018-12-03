@@ -105,7 +105,7 @@ require([
 		   "<b>Open Date:</b> {OpenDate}<br>"+
 		   "<b>Close Date:</b> {CloseDate}<br>"+ 
 		   "<b>Primary Ethnicity:</b> {PrimaryEthnicity}<br>"+
-		   "<button id={Link} type='button'>Click Here To Learn More</button><br>"
+		   "<a href={Link} rel='modal:open'>Click Here To Learn More</a>"
 		 };
 
       /**************************************************
@@ -115,7 +115,7 @@ require([
       // Layer for depicting mosques on time axis
 		var MosquesLayer = new FeatureLayer({
 			url: mosquesUrl,
-			definitionExpression: "PrimaryEthnicity='Arab' OR PrimaryEthnicity='African American' ",
+			definitionExpression: "PrimaryEthnicity='Arab' OR PrimaryEthnicity='Albanian' ",
 			outFields: ["*"],
 			popupTemplate: mosqueTemplate,
 			renderer: mosquesRenderer,
