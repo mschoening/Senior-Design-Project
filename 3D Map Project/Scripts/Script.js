@@ -141,7 +141,7 @@ require([
        * basemap
        ********************************************************************/
 		var map = new Map({
-			basemap: "topo",
+			basemap: "dark-gray",
 			layers: [MosquesLayer],
 			ground: {
 				navigationConstraint: {
