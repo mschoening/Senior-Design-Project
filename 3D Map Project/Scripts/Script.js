@@ -22,6 +22,7 @@ require([
 				wkid: 3857
 			}
 		};
+		
 	  
 	 // var definitionExpressionMkr;
 	  
@@ -92,9 +93,36 @@ require([
 				useSymbolValue: true // sets the width
 			}]
 		};
-		//var countiesRenderer = {
-			
-		//}
+		
+		/*var mosquesSurfaceRenderer = {
+			type: "simple", // autocasts as new SimpleRenderer()
+			symbol: {
+				type: "point-3d", // autocasts as new PointSymbol3D()
+				symbolLayers: [{
+					type: "icon", // autocasts as new IconSymbol3DLayer()
+					material: {
+					color: "#785226"
+					},
+					resource: {
+						primitive: "x"
+					},
+					size: 4
+				}]
+			}
+		};*/
+		/*var countiesRenderer = {
+			type: "simple", // autocasts as new SimpleRenderer()
+			symbol: {
+				type: "esriSFS", // autocasts as new PointSymbol3D()
+				style: "esriSFSSolid",
+				color: "red",
+				outline: 
+				{
+					type: "esriSLS",
+					style: "esriSFSSolid"
+				}
+				
+		}*/
 	  
 	  /**************************************************
        * mosque popup template
