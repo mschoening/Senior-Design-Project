@@ -1,3 +1,5 @@
+var year;
+
 require([
 	"esri/Map",
     "esri/views/SceneView",
@@ -35,65 +37,76 @@ require([
 			//	definitionExpressionMkr=definitionExpressionMkr+checkBoxes[i].value + " OR"
 			//}
 		//}
-	  
-     
-
+		var slider = document.getElementById("myRange");
+		slider.addEventListener("input", inputHandler);
+		//slider.addEventListener("change", inputHandler);
+		//var output = document.getElementById("curYear");
+		
+		function inputHandler(){
+			setYear(parseInt(slider.value));
+		}
+		
+		function setYear(value){
+			MosquesLayer.renderer = generateRender(value);
+		}
+		
       /**************************************************
        * Renderer for symbolizing mosques on time axis
        **************************************************/
-		var mosquesRenderer = {
-			type: "simple", // autocasts as new SimpleRenderer()
-			symbol: {
-				type: "point-3d", // autocasts as new PointSymbol3D()
-				symbolLayers: [{
-					type: "object", // autocasts as new ObjectSymbol3DLayer()
-					resource: {
-						primitive: "cylinder"
-					},
-					material: {
-						color: "red"
-					},			
-					anchor: "bottom", //Dwight: Was 'Bottom', changed to 'bottom' (Threw error beforehand)
-					width: 20
-				}]
-			},
-		//signifies variables that can be changed via data
-			visualVariables: [{
-				type: "size",
-				field: "TimeOpen",
-				axis: "height",
-				valueUnit: "meters"
-			}, 
-			{
-				type: "color",
-				field: "CloseDate",
-				stops: [{
-					value: 2018,
-					color: {
-						r: 245,
-						g: 41,
-						b: 235,
-						a: 1
-					}
+		function generateRender(year){
+			return{
+				type: "simple", // autocasts as new SimpleRenderer()
+				symbol: {
+					type: "point-3d", // autocasts as new PointSymbol3D()
+					symbolLayers: [{
+						type: "object", // autocasts as new ObjectSymbol3DLayer()
+						resource: {
+							primitive: "cylinder"
+						},
+						material: {
+							color: "red"
+						},			
+						anchor: "bottom", //Dwight: Was 'Bottom', changed to 'bottom' (Threw error beforehand)
+						width: 20
+					}]
 				},
+		//signifies variables that can be changed via data
+				visualVariables: [{
+					type: "size",
+					field: "TimeOpen",
+					axis: "height",
+					valueUnit: "meters"
+				}, 
 				{
-					value: 1970,
-					color: {
-						r: 245,
-						g: 41,
-						b: 235,
-						a: 1
+					type: "color",
+					field: "CloseDate",
+					stops: [{
+						value: year-1,
+						color: {
+							r: 245,
+							g: 41,
+							b: 235,
+							a: 0.1
+						}
 					},
+					{
+						value: year+1,
+						color: {
+							r: 245,
+							g: 41,
+							b: 235,
+							a: 1
+						},
+					}]
+				},
+		
+				{
+					type: "size",
+					axis: "width",
+					useSymbolValue: true // sets the width
 				}]
-			},
-		
-			{
-				type: "size",
-				axis: "width",
-				useSymbolValue: true // sets the width
-			}]
-		};
-		
+			}
+		}
 		/*var mosquesSurfaceRenderer = {
 			type: "simple", // autocasts as new SimpleRenderer()
 			symbol: {
@@ -143,10 +156,10 @@ require([
       // Layer for depicting mosques on time axis
 		var MosquesLayer = new FeatureLayer({
 			url: mosquesUrl,
-			definitionExpression: "PrimaryEthnicity='Arab' OR PrimaryEthnicity='Albanian' ",
+			definitionExpression: "",
 			outFields: ["*"],
 			popupTemplate: mosqueTemplate,
-			renderer: mosquesRenderer,
+			//renderer: generateRender(year),
 			returnZ: true,
 			elevationInfo: {
 				mode: "relative-to-ground",
@@ -177,6 +190,7 @@ require([
 				}
 			}
 		});
+		setYear(1900);
 
       /********************************************************************
        * Create a local scene 
@@ -201,3 +215,35 @@ require([
 		}, "homeDiv");
 	}
 );
+
+
+function openTab(evt, tName){
+	var i, tabcontent, tablinks; 
+	
+// Get all elements with class="tabcontent" and hide them
+	tabcontent = document.getElementsByClassName("tabcontent");
+	for (i = 0; i < tabcontent.length; i++) {
+		tabcontent[i].style.display = "none";
+  }
+
+  // Get all elements with class="tablinks" and remove the class "active"
+	tablinks = document.getElementsByClassName("tablinks");
+	for (i = 0; i < tablinks.length; i++) {
+		tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+
+  // Show the current tab, and add an "active" class to the button that opened the tab
+	document.getElementById(tName).style.display = "block";
+	evt.currentTarget.className += " active";
+};
+
+
+
+function updateYear(){
+	var slider = document.getElementById("myRange");
+	var output = document.getElementById("curYear");
+	year = parseInt(slider.value);
+	output.innerHTML = year;
+	//setYear(year);
+};
+
