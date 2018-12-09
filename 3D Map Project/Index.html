@@ -20,7 +20,7 @@
 		<div id="viewDiv"></div>
 		<!--<div id="homeDiv"></div-->
 		<div class="tab">
-			<button class="tablinks" onclick="openTab(event, 'Time Slider')">Time Slider</button>
+			<button class="tablinks" onclick="openTab(event, 'Time Slider')" id="defaultOpen">Time Slider</button>
 			<button class="tablinks" onclick="openTab(event, 'Filter')">Filter</button>
 			<button class="tablinks" onclick="openTab(event, 'Search')">Search</button>
 		</div>
@@ -30,14 +30,13 @@
 			<input type="range" min="1900" max="2018" value="1900" class="slider" id="myRange" oninput="updateYear()">
 			<p id="curYear"></p>
 		</div>
-		<!--
-		<div id="filterOptions">
+		<div id="Filter" class="tabcontent">
 			<input type="checkbox" name="Filters" value="Arab">Arab<br>
 			<input type="checkbox" name="Filters" value="African American">African American<br>
 			<input type="checkbox" name="Filters" value="Bosnian">Bosnian<br>
 			<input type="checkbox" name="Filters" value="Asian">Asian<br>
-			<input type="button" id="btn" value="Filter Results">
-		</div>-->
+			<input type="button" id="ftlrBtn" value="Filter Results">
+		
 		<div class="modal" style="display: none;"></div>
 	</body>
 </html>

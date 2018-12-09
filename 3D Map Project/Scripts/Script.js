@@ -26,7 +26,7 @@ require([
 		};
 		
 	  
-	 // var definitionExpressionMkr;
+	 
 	  
 	//function createFilter{
 		
@@ -50,6 +50,19 @@ require([
 			MosquesLayer.renderer = generateRender(value);
 		}
 		
+		/*function expressionBuilder(){
+			var checks = document.getElementsByName("Filters");
+			var expr ='';
+			for (i=0; i<4; i++){
+				if (checks[i].checked===true){
+					str+="PrimaryEthnicity="+checks[i].value + "OR";
+				}
+			}
+			return expr;
+		}*/
+		
+		
+		
       /**************************************************
        * Renderer for symbolizing mosques on time axis
        **************************************************/
@@ -67,7 +80,7 @@ require([
 							color: "red"
 						},			
 						anchor: "bottom", //Dwight: Was 'Bottom', changed to 'bottom' (Threw error beforehand)
-						width: 20
+						width: 60
 					}]
 				},
 		//signifies variables that can be changed via data
@@ -79,14 +92,14 @@ require([
 				}, 
 				{
 					type: "color",
-					field: "CloseDate",
+					field: "OpenDate",
 					stops: [{
 						value: year-1,
 						color: {
 							r: 245,
 							g: 41,
 							b: 235,
-							a: 0.1
+							a: 1
 						}
 					},
 					{
@@ -95,7 +108,7 @@ require([
 							r: 245,
 							g: 41,
 							b: 235,
-							a: 1
+							a: 0.1
 						},
 					}]
 				},
@@ -236,6 +249,8 @@ function openTab(evt, tName){
 	document.getElementById(tName).style.display = "block";
 	evt.currentTarget.className += " active";
 };
+
+
 
 
 

@@ -45,6 +45,7 @@
   background-color: #ccc;
 }
 .tabcontent {
+  display: none;
   position: absolute;
   top: 80%;
   width: 95%;
