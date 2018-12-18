@@ -79,7 +79,7 @@ require([
 						material: {
 							color: "red"
 						},			
-						anchor: "bottom", //Dwight: Was 'Bottom', changed to 'bottom' (Threw error beforehand)
+						anchor: "bottom", // Dwight: Was 'Bottom', changed to 'bottom' (Threw error beforehand)
 						width: 60
 					}]
 				},
