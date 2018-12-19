@@ -50,6 +50,11 @@ require([
 			MosquesLayer.renderer = generateRender(value);
 		}
 		
+		var exampleButton = document.getElementById("ftlrBtn").onclick= function(){
+			MosquesLayer.definitionExpression= "PrimaryEthnicity='Albanian'";
+		}
+		
+		
 		/*function expressionBuilder(){
 			var checks = document.getElementsByName("Filters");
 			var expr ='';
