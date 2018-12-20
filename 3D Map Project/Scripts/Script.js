@@ -44,10 +44,11 @@ require([
 		
 		function inputHandler(){
 			setYear(parseInt(slider.value));
+			
 		}
 		
 		function setYear(value){
-			MosquesLayer.renderer = generateRender(value);
+			MosquesLayer.renderer = generateRender(value);	
 		}
 		
 		var exampleButton = document.getElementById("ftlrBtn").onclick= function(){
@@ -72,6 +73,11 @@ require([
        * Renderer for symbolizing mosques on time axis
        **************************************************/
 		function generateRender(year){
+			var num = year;
+			var testOutput = document.getElementById("yrTest");
+			testOutput.innerHTML=num;
+								
+			
 			return{
 				type: "simple", // autocasts as new SimpleRenderer()
 				symbol: {
@@ -90,8 +96,11 @@ require([
 				},
 		//signifies variables that can be changed via data
 				visualVariables: [{
+					// curOpenTime = (num-$feature.OpenDate)*10;
 					type: "size",
-					field: "TimeOpen",
+					valueExpression: "(2018-$feature.OpenDate)*10",
+					//valueExpression: "When($feature.CloseDate<year, ($feature.CloseDate-$feature.OpenDate)*10, $feature.CloseDate>year,(year-$feature.OpenDate)*10)", expression for calculating height based on open date and close date
+					//field: "TimeOpen", Old but works 
 					axis: "height",
 					valueUnit: "meters"
 				}, 
@@ -177,7 +186,6 @@ require([
 			definitionExpression: "",
 			outFields: ["*"],
 			popupTemplate: mosqueTemplate,
-			//renderer: generateRender(year),
 			returnZ: true,
 			elevationInfo: {
 				mode: "relative-to-ground",
