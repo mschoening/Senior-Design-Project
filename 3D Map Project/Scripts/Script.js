@@ -75,9 +75,12 @@ require([
 		function generateRender(year){
 			var num = year;
 			var testOutput = document.getElementById("yrTest");
-			testOutput.innerHTML=num;
-								
 			
+			
+			document.getElementById("myExpression").innerHTML="		return (" + num + "-$feature.OpenDate)*10";
+			
+			var plsWork = document.getElementById("myExpression").text;
+			testOutput.innerHTML=String(plsWork);
 			return{
 				type: "simple", // autocasts as new SimpleRenderer()
 				symbol: {
@@ -98,7 +101,7 @@ require([
 				visualVariables: [{
 					// curOpenTime = (num-$feature.OpenDate)*10;
 					type: "size",
-					valueExpression: "(2018-$feature.OpenDate)*10",
+					valueExpression: plsWork,
 					//valueExpression: "When($feature.CloseDate<year, ($feature.CloseDate-$feature.OpenDate)*10, $feature.CloseDate>year,(year-$feature.OpenDate)*10)", expression for calculating height based on open date and close date
 					//field: "TimeOpen", Old but works 
 					axis: "height",
@@ -122,7 +125,7 @@ require([
 							r: 245,
 							g: 41,
 							b: 235,
-							a: 0.1
+							a: 0
 						},
 					}]
 				},
