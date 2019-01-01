@@ -12,7 +12,10 @@ require([
         "https://services9.arcgis.com/DC7lz0T9RX9VsXbK/arcgis/rest/services/filtertest/FeatureServer";
 		
 		var countiesUrl =
-		"https://services9.arcgis.com/DC7lz0T9RX9VsXbK/arcgis/rest/services/counties_v17a/FeatureServer"
+		"https://services9.arcgis.com/DC7lz0T9RX9VsXbK/arcgis/rest/services/counties_v17a/FeatureServer";
+		
+		var citiesUrl =
+		"https://services9.arcgis.com/DC7lz0T9RX9VsXbK/arcgis/rest/services/cities_townships/FeatureServer";
 
 		// sets extent to the area wanted
 		var greaterDetroit = { // autocasts as new Extent()
@@ -39,12 +42,9 @@ require([
 		//}
 		var slider = document.getElementById("myRange");
 		slider.addEventListener("input", inputHandler);
-		//slider.addEventListener("change", inputHandler);
-		//var output = document.getElementById("curYear");
-		
+				
 		function inputHandler(){
-			setYear(parseInt(slider.value));
-			
+			setYear(parseInt(slider.value));	
 		}
 		
 		function setYear(value){
@@ -103,7 +103,6 @@ require([
 					type: "size",
 					valueExpression: plsWork,
 					//valueExpression: "When($feature.CloseDate<year, ($feature.CloseDate-$feature.OpenDate)*10, $feature.CloseDate>year,(year-$feature.OpenDate)*10)", expression for calculating height based on open date and close date
-					//field: "TimeOpen", Old but works 
 					axis: "height",
 					valueUnit: "meters"
 				}, 
@@ -136,7 +135,7 @@ require([
 					useSymbolValue: true // sets the width
 				}]
 			}
-		}
+		};
 		/*var mosquesSurfaceRenderer = {
 			type: "simple", // autocasts as new SimpleRenderer()
 			symbol: {
@@ -153,19 +152,33 @@ require([
 				}]
 			}
 		};*/
-		/*var countiesRenderer = {
+		
+		var countiesRenderer = {
 			type: "simple", // autocasts as new SimpleRenderer()
 			symbol: {
-				type: "esriSFS", // autocasts as new PointSymbol3D()
-				style: "esriSFSSolid",
-				color: "red",
-				outline: 
-				{
-					type: "esriSLS",
-					style: "esriSFSSolid"
-				}
-				
-		}*/
+				type: "simple-fill", // autocasts as new PointSymbol3D()
+				style: "solid",
+				color:[
+					48,
+					50,
+					92,
+					.5
+				],
+			}	
+		}
+		var citiesRenderer = {
+			type: "simple", // autocasts as new SimpleRenderer()
+			symbol: {
+				type: "simple-fill", // autocasts as new PointSymbol3D()
+				style: "solid",
+				color:[
+					48,
+					50,
+					92,
+					.5
+				],
+			}	
+		}
 	  
 	  /**************************************************
        * mosque popup template
@@ -199,12 +212,18 @@ require([
 			unit: "meters"
 		});   
 		
-		/*var countiesLayer = new FeatureLayer({
+		var countiesLayer = new FeatureLayer({
 			url: countiesUrl,
-			outFields["*"],
-			renderer: countiesRenderer,
+			outFields: ["*"],
+			renderer: countiesRenderer,	
+		});
+		
+		var citiesLayer = new FeatureLayer({
+			url: citiesUrl,
+			outFields: ["*"],
+			renderer: citiesRenderer,
 			
-		});*/
+		});
 
       /********************************************************************
        * Create a map with the above defined layers and a topographic
@@ -212,7 +231,7 @@ require([
        ********************************************************************/
 		var map = new Map({
 			basemap: "dark-gray",
-			layers: [MosquesLayer],
+			layers: [MosquesLayer, countiesLayer, citiesLayer],
 			ground: {
 				navigationConstraint: {
 					type: "stay-above" //Dwight: Changed 'stayAbove' to 'stay-above' (threw error beforehand)
