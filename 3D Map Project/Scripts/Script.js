@@ -4,9 +4,10 @@ require([
 	"esri/Map",
     "esri/views/SceneView",
     "esri/layers/FeatureLayer",
-    "esri/widgets/Home"
+    "esri/widgets/Home",
+	"esri/widgets/Search"
     ], 
-	function(Map, SceneView, FeatureLayer, Home) {
+	function(Map, SceneView, FeatureLayer, Home, Search) {
 
 		var mosquesUrl =
         "https://services9.arcgis.com/DC7lz0T9RX9VsXbK/arcgis/rest/services/filtertest/FeatureServer";
@@ -26,20 +27,9 @@ require([
 			spatialReference: { // autocasts as new SpatialReference()
 				wkid: 3857
 			}
-		};
+		};	
 		
-	  
-	 
-	  
-	//function createFilter{
-		
-	//	var definitionExpressionMkr =""
-		//var checkBoxes = document.getElementsByName("Filters");
-		//for (var i = 0; i<checkBoxes.length; i++){
-			//if(checkBoxes[i].checked == true){
-			//	definitionExpressionMkr=definitionExpressionMkr+checkBoxes[i].value + " OR"
-			//}
-		//}
+		//Slider handler calls a new renderer every time slider is moved
 		var slider = document.getElementById("myRange");
 		slider.addEventListener("input", inputHandler);
 				
@@ -51,21 +41,55 @@ require([
 			MosquesLayer.renderer = generateRender(value);	
 		}
 		
+		
 		var exampleButton = document.getElementById("ftlrBtn").onclick= function(){
-			MosquesLayer.definitionExpression= "PrimaryEthnicity='Albanian'";
+			MosquesLayer.definitionExpression=expressionBuilder();
+		}
+		
+		//Code for switching visibility of highlighted layers. 
+		
+		var defaultMapView = document.getElementById("Type1").onclick= function(){
+			citiesLayer.visible = false;
+			countiesLayer.visible = false;
+		}
+		var countiesMapView = document.getElementById("Type2").onclick= function(){
+			citiesLayer.visible = false;
+			countiesLayer.visible = true;
+		}
+		var citiesMapView = document.getElementById("Type3").onclick= function(){
+			citiesLayer.visible = true;
+			countiesLayer.visible = false;
 		}
 		
 		
-		/*function expressionBuilder(){
+		//testing code for filters (will be deleted eventually)
+		
+		var testText = document.getElementById("ftlrTest")
+		
+		var testButton = document.getElementById("tstBtn").onclick= function(){
+			var curFltr = expressionBuilder();
+			testText.innerHTML=curFltr;
+			
+		}
+		
+		//Function to build the expression for filters. can expand to fit more later. 
+		function expressionBuilder(){
 			var checks = document.getElementsByName("Filters");
 			var expr ='';
+			var flag = 0;
 			for (i=0; i<4; i++){
 				if (checks[i].checked===true){
-					str+="PrimaryEthnicity="+checks[i].value + "OR";
+					if (flag == 0){
+						expr += "PrimaryEthnicity="+ "'"+checks[i].value + "'";
+						flag = 1;
+					}
+					else{
+						expr += " OR " +"PrimaryEthnicity="+ "'"+checks[i].value + "'";
+					}
 				}
 			}
 			return expr;
-		}*/
+		}
 		
 		
 		
@@ -74,13 +98,13 @@ require([
        **************************************************/
 		function generateRender(year){
 			var num = year;
-			var testOutput = document.getElementById("yrTest");
 			
+			//var testOutput = document.getElementById("yrTest");
 			
 			document.getElementById("myExpression").innerHTML="		return (" + num + "-$feature.OpenDate)*10";
 			
 			var plsWork = document.getElementById("myExpression").text;
-			testOutput.innerHTML=String(plsWork);
+			//testOutput.innerHTML=String(plsWork);
 			return{
 				type: "simple", // autocasts as new SimpleRenderer()
 				symbol: {
@@ -99,7 +123,6 @@ require([
 				},
 		//signifies variables that can be changed via data
 				visualVariables: [{
-					// curOpenTime = (num-$feature.OpenDate)*10;
 					type: "size",
 					valueExpression: plsWork,
 					//valueExpression: "When($feature.CloseDate<year, ($feature.CloseDate-$feature.OpenDate)*10, $feature.CloseDate>year,(year-$feature.OpenDate)*10)", expression for calculating height based on open date and close date
@@ -261,6 +284,27 @@ require([
 		var homeBtn = new Home({
 			view: view
 		}, "homeDiv");
+		
+		// Search bar implementation
+		
+		var searchWidget = new Search({
+			view: view,
+			searchAllEnabled: false,
+			locationEnabled: false,
+			includeDefaultSources: false,
+			sources:[{
+				featureLayer:{
+					url: "https://services9.arcgis.com/DC7lz0T9RX9VsXbK/arcgis/rest/services/filtertest/FeatureServer",
+					popupTemplate: mosqueTemplate,
+				},
+				searchFields:["Name"],
+				displayField: "Name",
+				exactMatch: false,
+				outFields: ["Name","Address"],
+				name: "sampleName",
+				placeholder: "exampletxt",
+			}]
+		}, SearchTB);
 	}
 );
 

@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
-		<title>Create a local scene - 4.9</title>
+		<title>3D Interactive Map</title>
 		<link rel="stylesheet" href="Styles/Style.css"> <!--Dwight: removed '...' -->
 		<link rel="stylesheet" href="https://js.arcgis.com/4.9/esri/css/main.css">
 		<script src="https://js.arcgis.com/4.9/"></script> <!--Dwight: reordered script just in case -->
@@ -23,14 +23,17 @@
 		<div class="tab">
 			<button class="tablinks" onclick="openTab(event, 'Time Slider')" id="defaultOpen">Time Slider</button>
 			<button class="tablinks" onclick="openTab(event, 'Filter')">Filter</button>
-			<!--button class="tablinks" onclick="openTab(event, 'Search')">Search</button-->
+			<button class="tablinks" onclick="openTab(event, 'SearchTB')">Search</button>
 		</div>
 		
 		<!-- Tab Content -->
 		<div id="Time Slider" class="tabcontent">
 			<input type="range" min="1900" max="2018" value="1900" class="slider" id="myRange" oninput="updateYear()">
 			<p id="curYear">1900</p>
-			<p id="yrTest"></p>
+			<p id="yrTest">Map Highlight Mode</p>
+			<input type="radio" name="Type" id="Type1" value="Default"> Default
+			<input type="radio" name="Type" id="Type2" value="Counties"> Counties
+			<input type="radio" name="Type" id="Type3" value="Cities"> Cities
 		</div>
 		<div id="Filter" class="tabcontent">
 			<input type="checkbox" name="Filters" value="Albanian">Albanian<br>
@@ -38,7 +41,12 @@
 			<input type="checkbox" name="Filters" value="Bosnian">Bosnian<br>
 			<input type="checkbox" name="Filters" value="Asian">Asian<br>
 			<input type="button" id="ftlrBtn" value="Filter Results">
+			<input type="button" id="tstBtn" value="test">
+			<p id="ftlrTest"></p>
+		</div>
+		<div id="SearchTB" class="tabcontent">
 		
+		</div>
 		<div class="modal" style="display: none;"></div>
 	</body>
 </html>
