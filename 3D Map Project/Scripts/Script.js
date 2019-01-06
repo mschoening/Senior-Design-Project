@@ -97,14 +97,10 @@ require([
        * Renderer for symbolizing mosques on time axis
        **************************************************/
 		function generateRender(year){
-			var num = year;
-			
 			//var testOutput = document.getElementById("yrTest");
 			
-			document.getElementById("myExpression").innerHTML="		return (" + num + "-$feature.OpenDate)*10";
-			
-			var plsWork = document.getElementById("myExpression").text;
-			//testOutput.innerHTML=String(plsWork);
+			var growExp = "return (" + year + "-$feature.OpenDate)*10";
+			//testOutput.innerHTML=String(growExp);
 			return{
 				type: "simple", // autocasts as new SimpleRenderer()
 				symbol: {
@@ -124,7 +120,7 @@ require([
 		//signifies variables that can be changed via data
 				visualVariables: [{
 					type: "size",
-					valueExpression: plsWork,
+					valueExpression: growExp,
 					//valueExpression: "When($feature.CloseDate<year, ($feature.CloseDate-$feature.OpenDate)*10, $feature.CloseDate>year,(year-$feature.OpenDate)*10)", expression for calculating height based on open date and close date
 					axis: "height",
 					valueUnit: "meters"
