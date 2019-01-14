@@ -2,13 +2,16 @@ var year;
 
 require([
 	"esri/Map",
+	"esri/Graphic",
     "esri/views/SceneView",
     "esri/layers/FeatureLayer",
     "esri/widgets/Home",
 	"esri/widgets/Search",
-	"esri/geometry/Polyline"
+	"esri/geometry/Polyline",
+	"esri/symbols/LineSymbol3D",
+	"esri/symbols/PathSymbol3DLayer"
     ], 
-	function(Map, SceneView, FeatureLayer, Home, Search, Polyline) {
+	function(Map, Graphic, SceneView, FeatureLayer, Home, Search, Polyline, LineSymbol3D, PathSymbol3DLayer) {
 
 		var mosquesUrl =
         "https://services9.arcgis.com/DC7lz0T9RX9VsXbK/arcgis/rest/services/filtertest/FeatureServer";
@@ -96,17 +99,32 @@ require([
 		// AMBC Latitude 42.333947 Longitude -83.185875
 		//MAS latitude 42.409022 longitude -83.057406
 		
-		var paths = [
-		[
-			[42.333947, -83.185875],
-			[42.409022, -83.057406]
+		/* Dwight: Coordinates are not longitude and latitude! Same units as GreaterDetroit extent! */
+		var paths = [[
+			[-9158073.232901145,
+			5125761.087947986],
+			[-9424685.587559769,
+			5372805.56336561]
 		]];
-		var line = new Polyline({
+		var lineGeometry = new Polyline({
 			hasZ: false,
 			hasM: false,
 			paths: paths,
 			spatialReference: {wkid: 3857}
 		});
+		var pathLayer = new PathSymbol3DLayer({
+			size: 100,
+    		material: { color: [226, 119, 40] }
+		});
+		var lineSymbol = new LineSymbol3D({
+			symbolLayers: [pathLayer]
+		});
+		var lineGraphic = new Graphic({
+			geometry: lineGeometry,
+			symbol: lineSymbol
+		});
+		
+		
 		
       /**************************************************
        * Renderer for symbolizing mosques on time axis
@@ -316,6 +334,8 @@ require([
 				placeholder: "exampletxt",
 			}]
 		}, SearchTB);
+		
+		view.graphics.add(lineGraphic);
 	}
 );
 
