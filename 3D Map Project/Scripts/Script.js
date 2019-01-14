@@ -5,9 +5,10 @@ require([
     "esri/views/SceneView",
     "esri/layers/FeatureLayer",
     "esri/widgets/Home",
-	"esri/widgets/Search"
+	"esri/widgets/Search",
+	"esri/geometry/Polyline"
     ], 
-	function(Map, SceneView, FeatureLayer, Home, Search) {
+	function(Map, SceneView, FeatureLayer, Home, Search, Polyline) {
 
 		var mosquesUrl =
         "https://services9.arcgis.com/DC7lz0T9RX9VsXbK/arcgis/rest/services/filtertest/FeatureServer";
@@ -91,7 +92,21 @@ require([
 			return expr;
 		}
 		
+		// masjid al salam to american muslim bekaa center
+		// AMBC Latitude 42.333947 Longitude -83.185875
+		//MAS latitude 42.409022 longitude -83.057406
 		
+		var paths = [
+		[
+			[42.333947, -83.185875],
+			[42.409022, -83.057406]
+		]];
+		var line = new Polyline({
+			hasZ: false,
+			hasM: false,
+			paths: paths,
+			spatialReference: {wkid: 3857}
+		});
 		
       /**************************************************
        * Renderer for symbolizing mosques on time axis
