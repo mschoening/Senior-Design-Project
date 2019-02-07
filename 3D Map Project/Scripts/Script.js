@@ -335,6 +335,7 @@ require([
 			}]
 		}, SearchTB);
 		
+		/* Dwight: this allows the line to be rendered */
 		view.graphics.add(lineGraphic);
 	}
 );
