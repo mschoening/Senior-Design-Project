@@ -1,7 +1,11 @@
 <head>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="Scripts/jquery.flickry.min.js"></script>	
+	<link rel="stylesheet" href="Styles/jquery.flickry.css" />
+	<link rel="stylesheet" href="Styles/flickry_style.css" />
+	
 </head>
-
+<body>
 <h1 id="name">Albanian Islamic Center</h1>
 <h3 id="openDt">Opened: November 3, 1963</h3>
 <h3 id="addr">Address: 19775 Harper Avenue Harper Woods, MI</h3>
@@ -20,28 +24,14 @@ With a prayer area, offices, large social hall, classrooms, and kitchen, the mos
  The center provides weekend religious instruction in Arabic, Albanian, and English along with other educational and service programs. The Albanian Islamic Center is open to Muslims from all ethnic backgrounds, but immigrants from Europe and their descendents form its core membership and predominate on its board. 
  The mosque is unusual for its location in Detroit’s eastern suburbs.</p><br>
 
-<div id="flickrembed_21"></div><div style="position:absolute; top:-70px; display:block; text-align:center; z-index:-1;"></div><script src='https://flickrembed.com/embed_v2.js.rand.php?container=flickrembed_21&source=flickr&layout=responsive&input=72157702795749631&sort=0&by=album&theme=default&scale=fill&speed=3000&limit=100&skin=default&autoplay=true'></script><script type="text/javascript">function showpics(){var a=$("#box").val();$.getJSON("http://api.flickr.com/services/feeds/photos_public.gne?tags="+a+"&tagmode=any&format=json&jsoncallback=?",function(a){$("#images").hide().html(a).fadeIn("fast"),$.each(a.items,function(a,e){$("<img/>").attr("src",e.media.m).appendTo("#images")})})}</script><small style="display: block; text-align: center; margin: 0 auto;"></small>
-
-<!--div id="flickr-images"></div>
 
 
-<script type=text/javascript>
-	function getImgs(setId) {
-		var URL = "https://api.flickr.com/services/rest/" +
-		"?method=flickr.photosets.getPhotos" +  
-		"&api_key=e8f44bcb8c59ff404359a1c1c81eaa9b" +
-		"&photoset_id=" + setId +
-		"&privacy_filter=1" +
-		"&per_page=10" + 
-		"&format=json&nojsoncallback=1";
-	$.getJSON(URL, function(data){
-			$.each(data.photoset.photo, function(i, item){
-				var img_src = "http://farm" + item.farm + ".static.flickr.com/" + item.server + "/" + item.id + "_" + item.secret + "_m.jpg";
-				var img_thumb = $("<img/>").attr("src", img_src).css("margin", "8px")
-				$(img_thumb).appendTo("#flickr-images");
-			});
-		});
-	}
-
-	getImgs("72157674361260277");
-</script--> 
+<div id="slideshow">	
+	<div class="gallery" data-set-id="72157674361260277"></div>
+</div>	
+</body>	
+<script type="text/javascript">
+	$().ready(function() {
+		$('.gallery').flickry();					
+	});
+</script>
