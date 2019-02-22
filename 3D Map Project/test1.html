@@ -1,11 +1,29 @@
+<!DOCTYPE html>
+ <html dir="ltr" lang="en-US">
+
 <head>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script src="Scripts/jquery.flickry.min.js"></script>	
-	<link rel="stylesheet" href="Styles/jquery.flickry.css" />
-	<link rel="stylesheet" href="Styles/flickry_style.css" />
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
 	
-</head>
-<body>
+	
+<!-- enable RWD -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- jQuery library-->
+	<script src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js'>
+	<script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>  
+	<script type="text/javascript" src="js/jquery-ui.min.js"></script>
+<!-- start niceGallery scripts --> 
+	<script type="text/javascript" src="js/custom.js"></script>  
+	<script type="text/javascript" src="js/FlickrAPI.js"></script>
+	<script type="text/javascript" src="js/Flickr.Gallery.js"></script>
+	<link rel="stylesheet" type="text/css" href="gallery.css" />
+<!-- end niceGallery scripts -->
+
+	<link rel="stylesheet" type="text/css" href="style.css" />  
+	<link href='http://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+</head> 
+<body> 
+    <!-- VIEWBOX -->
+<!--    <div class="viewbox_bg"></div>-->
 <h1 id="name">Albanian Islamic Center</h1>
 <h3 id="openDt">Opened: November 3, 1963</h3>
 <h3 id="addr">Address: 19775 Harper Avenue Harper Woods, MI</h3>
@@ -24,14 +42,18 @@ With a prayer area, offices, large social hall, classrooms, and kitchen, the mos
  The center provides weekend religious instruction in Arabic, Albanian, and English along with other educational and service programs. The Albanian Islamic Center is open to Muslims from all ethnic backgrounds, but immigrants from Europe and their descendents form its core membership and predominate on its board. 
  The mosque is unusual for its location in Detroit’s eastern suburbs.</p><br>
 
+<h3 id="photo"> tap photos to view larger</h3>
 
+<div class="content"> 
+ 
+	<!-- gallery STRUCTURE -->
+	<div class="niceGallery" id="gallery">
+        <!-- HERE IS PLACE FOR PHOTOS -->
+	</div>
+	<!-- end gallery STRUCTURE --> 
 
-<div id="slideshow">	
-	<div class="gallery" data-set-id="72157674361260277"></div>
-</div>	
-</body>	
-<script type="text/javascript">
-	$().ready(function() {
-		$('.gallery').flickry();					
-	});
-</script>
+</div> 
+
+</script-->
+</body>
+</html>
