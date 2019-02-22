@@ -7,7 +7,7 @@
 *	FLICKR GALLERY | JQUERY 1.9+ & FLICKR API
 *	 
 */
-;(function ($) {
+(function ($) {
     /* Global variables */
     var prty, flickr;
     
@@ -29,7 +29,7 @@
             //FLICKR user ID
             User: '21853641@N03',
             //Flickr PhotoSet ID
-            PhotoSet: '72157674361260277',
+            PhotoSet: photo_id, //Dwight: defined in 'ExpandedInfo.php' with inline JS
             /*-- VIEWBOX SETTINGS --*/ 
 			Speed		: 400,		//Speed of animations
             navigation	: 1,		//(true) Navigation (arrows)
