@@ -21,6 +21,9 @@ require([
 		
 		var citiesUrl =
 		"https://services9.arcgis.com/DC7lz0T9RX9VsXbK/arcgis/rest/services/cities_townships/FeatureServer";
+		
+		var connUrl = 
+		"https://services9.arcgis.com/DC7lz0T9RX9VsXbK/arcgis/rest/services/pathstest/FeatureServer";
 
 		// sets extent to the area wanted
 		var greaterDetroit = { // autocasts as new Extent()
@@ -42,7 +45,8 @@ require([
 		}
 		
 		function setYear(value){
-			MosquesLayer.renderer = generateRender(value);	
+			MosquesLayer.renderer = generateRender(value);
+			connLayer.renderer = generateConnRender(value);
 		}
 		
 		
@@ -94,36 +98,6 @@ require([
 			}
 			return expr;
 		}
-		
-		// masjid al salam to american muslim bekaa center
-		// AMBC Latitude 42.333947 Longitude -83.185875
-		//MAS latitude 42.409022 longitude -83.057406
-		
-		/* Dwight: Coordinates are not longitude and latitude! Same units as GreaterDetroit extent! */
-		var paths = [[
-			[-9158073.232901145,
-			5125761.087947986],
-			[-9424685.587559769,
-			5372805.56336561]
-		]];
-		var lineGeometry = new Polyline({
-			hasZ: false,
-			hasM: false,
-			paths: paths,
-			spatialReference: {wkid: 3857}
-		});
-		var pathLayer = new PathSymbol3DLayer({
-			size: 100,
-    		material: { color: [226, 119, 40] }
-		});
-		var lineSymbol = new LineSymbol3D({
-			symbolLayers: [pathLayer]
-		});
-		var lineGraphic = new Graphic({
-			geometry: lineGeometry,
-			symbol: lineSymbol
-		});
-		
 		
 		
       /**************************************************
@@ -188,6 +162,50 @@ require([
 				}]
 			}
 		};
+		
+		/***************************************
+		* Function for generating connections. *
+		****************************************/
+		function generateConnRender(year){
+			
+			return {
+				type: "simple",
+				symbol: {
+					type: "line-3d",
+					symbolLayers: [{
+						type: "path",
+						size: 50,
+						material:{
+							color: "red"
+						}
+					}]
+				},
+				visualVariables: [{
+					type: "color",
+					field: "ConYear",
+					stops: [{
+						value: year-1,
+						color: {
+							r: 255,
+							g: 0,
+							b: 0,
+							a: 1,
+						}
+					},
+					{
+						value: year+1,
+						color: {
+							r: 255,
+							g: 0,
+							b: 0,
+							a: 0,
+						}
+					}]
+				}]
+				
+			}	
+		}
+		
 		/*var mosquesSurfaceRenderer = {
 			type: "simple", // autocasts as new SimpleRenderer()
 			symbol: {
@@ -276,6 +294,22 @@ require([
 			renderer: citiesRenderer,
 			
 		});
+		
+		var connLayer = new FeatureLayer({
+			url: connUrl,
+			definitionExpression: "",
+			outFields: ["*"],
+			returnZ: true, 
+			elevationInfo: {
+				mode: "relative-to-ground",
+				offset: 0,
+				featureExpressionInfo: {
+					expression: "$feature.z"
+				}
+				
+			},
+			unit: "meters"
+		});
 
       /********************************************************************
        * Create a map with the above defined layers and a topographic
@@ -283,7 +317,7 @@ require([
        ********************************************************************/
 		var map = new Map({
 			basemap: "dark-gray",
-			layers: [MosquesLayer, countiesLayer, citiesLayer],
+			layers: [MosquesLayer, countiesLayer, citiesLayer, connLayer],
 			ground: {
 				navigationConstraint: {
 					type: "stay-above" //Dwight: Changed 'stayAbove' to 'stay-above' (threw error beforehand)
@@ -335,8 +369,6 @@ require([
 			}]
 		}, SearchTB);
 		
-		/* Dwight: this allows the line to be rendered */
-		view.graphics.add(lineGraphic);
 	}
 );
 
