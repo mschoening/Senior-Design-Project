@@ -355,15 +355,16 @@ require([
 			searchAllEnabled: false,
 			locationEnabled: false,
 			includeDefaultSources: false,
+			popupEnabled: true,
 			sources:[{
 				featureLayer:{
-					url: "https://services9.arcgis.com/DC7lz0T9RX9VsXbK/arcgis/rest/services/filtertest/FeatureServer",
+					url: mosquesUrl,
 					popupTemplate: mosqueTemplate,
 				},
-				searchFields:["Name"],
+				searchFields:["Name","Address"],
 				displayField: "Name",
 				exactMatch: false,
-				outFields: ["Name","Address"],
+				outFields: ["Name","Address","OpenDate","CloseDate","PrimaryEthnicity","link"],
 				name: "sampleName",
 				placeholder: "exampletxt",
 			}]
