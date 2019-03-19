@@ -1,5 +1,4 @@
 var year;
-
 require([
 	"esri/Map",
 	"esri/Graphic",
@@ -50,9 +49,7 @@ require([
 		}
 		
 		
-		var exampleButton = document.getElementById("ftlrBtn").onclick= function(){
-			MosquesLayer.definitionExpression=expressionBuilder();
-		}
+		
 		
 		//Code for switching visibility of highlighted layers. 
 		
@@ -70,19 +67,13 @@ require([
 		}
 		
 		
-		//testing code for filters (will be deleted eventually)
-		
-		var testText = document.getElementById("ftlrTest")
-		
-		var testButton = document.getElementById("tstBtn").onclick= function(){
-			var curFltr = expressionBuilder();
-			testText.innerHTML=curFltr;
-			
-		}
-		
-		//Function to build the expression for filters. can expand to fit more later. 
-		function expressionBuilder(){
-			var checks = document.getElementsByName("Filters");
+		/***********************************************************************
+		 *Functions to build the varrious expressions for filtering the map. 
+		 ***********************************************************************/
+		 
+		//function and button for filtering by ethnicity 
+		function EthnicityExpressionBuilder(){
+			var checks = document.getElementsByName("eFilters");
 			var expr ='';
 			var flag = 0;
 			for (i=0; i<4; i++){
@@ -99,12 +90,62 @@ require([
 			return expr;
 		}
 		
+		var ethnicityFltrBtn = document.getElementById("ethnicityFtlrBtn").onclick= function(){
+			MosquesLayer.definitionExpression = EthnicityExpressionBuilder();
+		}
+		
+		//function and button for filtering by city 
+		function CityExpressionBuilder(){
+			var checks = document.getElementsByName("cFilters");
+			var expr ='';
+			var flag = 0;
+			for (i=0; i<4; i++){
+				if (checks[i].checked===true){
+					if (flag == 0){
+						expr += "City="+ "'"+checks[i].value + "'";
+						flag = 1;
+					}
+					else{
+						expr += " OR " +"City="+ "'"+checks[i].value + "'";
+					}
+				}
+			}
+			return expr;
+		}
+		
+		var cityFltrBtn = document.getElementById("cityFtlrBtn").onclick= function(){
+			MosquesLayer.definitionExpression = CityExpressionBuilder();
+		}
+		
+		//function and button for filtering by county 
+		function CountyExpressionBuilder(){
+			var checks = document.getElementsByName("CoFilters");
+			var expr ='';
+			var flag = 0;
+			for (i=0; i<4; i++){
+				if (checks[i].checked===true){
+					if (flag == 0){
+						expr += "County="+ "'"+checks[i].value + "'";
+						flag = 1;
+					}
+					else{
+						expr += " OR " +"County="+ "'"+checks[i].value + "'";
+					}
+				}
+			}
+			return expr;
+		}
+		
+		var countyFltrBtn = document.getElementById("countyFtlrBtn").onclick= function(){
+			MosquesLayer.definitionExpression = CountyExpressionBuilder();
+		}
+		
 		
       /**************************************************
        * Renderer for symbolizing mosques on time axis
        **************************************************/
 		function generateRender(year){
-			//var testOutput = document.getElementById("yrTest");
+			//var testOutput = document.getElementById("hlModeLbl");
 			
 			var growExp = "return (" + year + "-$feature.OpenDate)*10";
 			//testOutput.innerHTML=String(growExp);
@@ -373,7 +414,12 @@ require([
 	}
 );
 
+/*****************************************
+ *Functions used in the html document. 
+ *****************************************/
 
+
+//function for switching inbetween the tab content
 function openTab(evt, tName){
 	var i, tabcontent, tablinks; 
 	
@@ -394,10 +440,28 @@ function openTab(evt, tName){
 	evt.currentTarget.className += " active";
 };
 
+//function for switching between filter options. 
+function setForm(val){
+	if(val == 'cityFtlr'){
+		document.getElementById('cityFtlrDiv').style='display: block;';
+		document.getElementById('countyFtlrDiv').style='display: none;';
+		document.getElementById('prEtFtlrDiv').style='display: none;';
+	}
+	else if (val == 'countyFtlr'){
+		document.getElementById('cityFtlrDiv').style='display: none;';
+		document.getElementById('countyFtlrDiv').style='display: block;';
+		document.getElementById('prEtFtlrDiv').style='display: none;';
+	}
+	else{
+		document.getElementById('cityFtlrDiv').style='display: none;';
+		document.getElementById('countyFtlrDiv').style='display: none;';
+		document.getElementById('prEtFtlrDiv').style='display: block;';
+	}
+};
 
 
 
-
+//function for updating time slider year label 
 function updateYear(){
 	var slider = document.getElementById("myRange");
 	var output = document.getElementById("curYear");

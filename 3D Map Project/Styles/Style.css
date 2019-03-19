@@ -3,8 +3,8 @@
  #viewDiv {
 	padding: 0;
     margin: 0;
-    height: 90%;
-    width: 100%;
+    height: 100%;
+    width: 93%;
 	float: right;
 }
 
@@ -22,11 +22,13 @@
 .tab {
   overflow: hidden;
   border: 1px solid #ccc;
-  background-color: #f1f1f1;
+  background-color: #7e838c;
   position: absolute;
-  top: 73%;
-  width: 100%;
-  right: 0;
+  width: 19.54%;
+  height: 99.8%;
+  float: left;
+  left: 0;
+  top: 0;
  
 }
 .tab button {
@@ -47,17 +49,23 @@
 .tabcontent {
   display: none;
   position: absolute;
-  top: 80%;
-  width: 95%;
-  right: 0;
+  float: left;
+  width: 19.03%;
+  height: 80%;
+  left: 0;
+  top: 70px;
+  background: #7e838c;
+  padding-left: 10px;
+  
 }
 
 .slider {
-  -webkit-appearance: none;  /* Override default CSS styles */
+  -webkit-appearance: slider-vertical;  /* Override default CSS styles */
   appearance: none;
-  width: 95%; /* Full-width */
-  height: 25px; /* Specified height */
-  background: #d3d3d3; /* Grey background */
+  align: center; 
+  width: 100%; /* Full-width */
+  height: 70%; /* Specified height */
+  background: #7e838c; /* Grey background */
   outline: none; /* Remove outline */
   opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
   -webkit-transition: .2s; /* 0.2 seconds transition on hover */
@@ -73,6 +81,19 @@
   background: #4CAF50; /* Green background */
   cursor: pointer; /* Cursor on hover */
 }
+#curYear {
+	text-align: center;
+}
+#hlModeLbl {
+	padding-left: 10px;
+}
+
+#SearchTB {
+	width: 19.54%;
+	height: 80%;
+	background-color: #7e838c;
+}
+
 
 
 
