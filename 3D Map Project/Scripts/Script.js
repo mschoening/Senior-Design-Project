@@ -147,12 +147,12 @@ require([
 		function generateRender(year){
 			//var testOutput = document.getElementById("debugTxt");
 			
-			//old height arcade expressions just in case. 
-			/*var fieldPkr = "When(" + year + "< $feature.OpenDate && " + year +  "< $feature.CloseDate, 'OpenDate'," + year + " >= $feature.OpenDate && " + year + " < $feature.CloseDate, 'OpenDate, " + year + " >= $feature.CloseDate, 'CloseDate', 'CloseDate')" 
-			var growExp1 = "When(" + year + "< $feature.CloseDate,'(" + year + "-$feature.OpenDate)*10'," + year + " >= $feature.CloseDate,'($feature.CloseDate-$feature.OpenDate)*10')";
-			var growExp = "return (" + year + "-$feature.OpenDate)*10";*/
+			var fieldPkr = "When($feature.CloseDate <= " + year + ",'Closed', $feature.OpenDate >= " + year +" && $feature.CloseDate > " + year + ",'Open',  $feature.OpenDate > " + year + ", 'NotOpen', 'n/a')";
 			
-			var growExp2 = "IIf (" + year + ">= $feature.CloseDate,$feature.Closedate-$feature.OpenDate,"+ year + "-$feature.OpenDate)*10" 
+		    //var fieldPkr = "When(" + year + "< $feature.OpenDate, 'NotOpen'," + year + " >= $feature.OpenDate && " + year + " < $feature.CloseDate, 'Open', " + year + " >= $feature.CloseDate, 'Closed', 'n/a')";
+			
+			
+			var growExp2 = "IIf (" + year + ">= $feature.CloseDate,$feature.Closedate-$feature.OpenDate,"+ year + "-$feature.OpenDate)*10";
 			//testOutput.innerHTML=String(growExp2);
 			return{
 				type: "simple", // autocasts as new SimpleRenderer()
@@ -173,10 +173,12 @@ require([
 				//signifies variables that can be changed via data
 				visualVariables: [{
 					type: "size",
-					valueExpression: growExp2,
+					valueExpression: growExp2, 
 					axis: "height",
 					valueUnit: "meters"
-				}, 	
+				}, 
+
+				//Previous working code. 
 				{
 					type: "color",
 					field: "OpenDate",//change this to oDate when new data is done
@@ -199,6 +201,48 @@ require([
 						},
 					}]
 				},
+				//expieremental code that does not work. 
+				/*{
+					type: "color",
+					valueExpression: fieldPkr,//change this to oDate when new data is done
+					stops: [{
+						value: "NotOpen",
+						color: {
+							r: 245,
+							g: 41,
+							b: 235,
+							a: 0
+						}, 
+					},
+					{
+						value: "Open",
+						color: {
+							r: 245,
+							g: 41,
+							b: 235,
+							a: 0.4
+						},
+					},
+					{
+						value: "Closed",
+						color: {
+							r: 245,
+							g: 41,
+							b: 235,
+							a: 1
+						},
+					},
+					{
+						value: "n/a",
+						color: {
+							r: 255,
+							g: 102,
+							b: 0,
+							a: 1
+						},
+					}]
+					
+				},*/
 				{
 					type: "size",
 					axis: "width",
