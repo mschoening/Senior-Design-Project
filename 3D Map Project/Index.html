@@ -15,7 +15,7 @@
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
   
 	</head>
-	</script>
+	
 	<body>
 		<div id="viewDiv"></div>
 		<!--<div id="homeDiv"></div-->
@@ -23,29 +23,108 @@
 			<button class="tablinks" onclick="openTab(event, 'Time Slider')" id="defaultOpen">Time Slider</button>
 			<button class="tablinks" onclick="openTab(event, 'Filter')">Filter</button>
 			<button class="tablinks" onclick="openTab(event, 'SearchTB')">Search</button>
+			<a href = "help.html" rel='modal:open'><button class="tablinks">Help</button></a> 
 		</div>
 		
 		<!-- Tab Content -->
 		<div id="Time Slider" class="tabcontent">
 			<input type="range" min="1900" max="2018" value="1900" class="slider" id="myRange" oninput="updateYear()">
-			<p id="curYear">1900</p>
-			<p id="yrTest">Map Highlight Mode</p>
+			<h2 id="curYear">1900</h2>
+			<p id="hlModeLbl">Map Highlight Mode</p>
 			<input type="radio" name="Type" id="Type1" value="Default"> Default
 			<input type="radio" name="Type" id="Type2" value="Counties"> Counties
 			<input type="radio" name="Type" id="Type3" value="Cities"> Cities
 		</div>
+		
 		<div id="Filter" class="tabcontent">
-			<input type="checkbox" name="Filters" value="Albanian">Albanian<br>
-			<input type="checkbox" name="Filters" value="African American">African American<br>
-			<input type="checkbox" name="Filters" value="Bosnian">Bosnian<br>
-			<input type="checkbox" name="Filters" value="Asian">Asian<br>
-			<input type="button" id="ftlrBtn" value="Filter Results">
-			<input type="button" id="tstBtn" value="test">
-			<p id="ftlrTest"></p>
+			
+			<p>Filter by:</p>
+			<select id="ftlrSelect" onchange="setForm(this.value)">
+				<option value="cityFtlr">City</option>
+				<option value="countyFtlr">County</option>
+				<option value="ethnicityFtlr">Primary Ethnicity</option>
+			</select>
+			
+			<div id="cityFtlrDiv">			
+				<form method="post" name="cityFtlr" action="">
+					<input type="checkbox" name ="cFilters" value="Bloomfield Hills">Bloomfield Hills<br>
+					<input type="checkbox" name ="cFilters" value="Brownstown">Brownstown<br>
+					<input type="checkbox" name ="cFilters" value="Canton">Canton<br>
+					<input type="checkbox" name ="cFilters" value="Dearborn">Dearborn<br>
+					<input type="checkbox" name ="cFilters" value="Dearborn Heights">Dearborn Heights<br>
+					<input type="checkbox" name ="cFilters" value="Detroit">Detroit<br>
+					<input type="checkbox" name ="cFilters" value="Eastpointe">Eastpointe<br>
+					<input type="checkbox" name ="cFilters" value="Farmington Hills">Farmington Hills<br>
+					<input type="checkbox" name ="cFilters" value="Franklin">Franklin<br>
+					<input type="checkbox" name ="cFilters" value="Garden City">Garden City<br>
+					<input type="checkbox" name ="cFilters" value="Hamtramck">Hamtramck<br>
+					<input type="checkbox" name ="cFilters" value="Harper Woods">Harper Woods<br>
+					<input type="checkbox" name ="cFilters" value="Highland Park">Highland Park<br>
+					<input type="checkbox" name ="cFilters" value="Inkster">Inkster<br>
+					<input type="checkbox" name ="cFilters" value="Lincoln Park">Lincoln Park<br>
+					<input type="checkbox" name ="cFilters" value="Madison Heights">Madison Heights<br>
+					<input type="checkbox" name ="cFilters" value="Oak Park">Oak Park<br>
+					<input type="checkbox" name ="cFilters" value="Pontiac">Pontiac<br>
+					<input type="checkbox" name ="cFilters" value="Rochester Hills">Rochester Hills<br>
+					<input type="checkbox" name ="cFilters" value="Southfield">Southfield<br>
+					<input type="checkbox" name ="cFilters" value="St. Clair Shores">St. Clair Shores<br>
+					<input type="checkbox" name ="cFilters" value="Sterling Heights">Sterling Heights<br>
+					<input type="checkbox" name ="cFilters" value="Taylor">Taylor<br>
+					<input type="checkbox" name ="cFilters" value="Walled Lake">Walled Lake<br>
+					<input type="checkbox" name ="cFilters" value="Warren">Warren<br>
+					<input type="checkbox" name ="cFilters" value="Waterford">Waterford<br>
+					<input type="checkbox" name ="cFilters" value="Westland">Westland<br>
+					<input type="checkbox" name ="cFilters" value="Windsor">Windsor<br>
+					<input type="checkbox" name ="cFilters" value="Ypsilanti">Ypsilanti<br>
+					<input type="button" id="cityFtlrBtn" value="Filter Results">
+				</form>
+			</div>
+			
+			<div id="prEtFtlrDiv" style="display: none">
+				<form name="ethnicityFtlr" action="">
+					<input type="checkbox" name ="eFilters" value="African">African<br>
+					<input type="checkbox" name ="eFilters" value="African American">African American<br>
+					<input type="checkbox" name ="eFilters" value="Albanian">Albanian<br>
+					<input type="checkbox" name ="eFilters" value="Arab">Arab<br>
+					<input type="checkbox" name ="eFilters" value="Asian">Asian<br>
+					<input type="checkbox" name ="eFilters" value="Bangladeshi">Bangladeshi<br>
+					<input type="checkbox" name ="eFilters" value="Bosnian">Bosnian<br>
+					<input type="checkbox" name ="eFilters" value="Egyptian">Egyptian<br>
+					<input type="checkbox" name ="eFilters" value="Indian">Indian<br>
+					<input type="checkbox" name ="eFilters" value="Iraqi">Iraqi<br>
+					<input type="checkbox" name ="eFilters" value="Lebanese">Lebanese<br>
+					<input type="checkbox" name ="eFilters" value="Lebanese American">Lebanese American<br>
+					<input type="checkbox" name ="eFilters" value="Mixed">Mixed<br>
+					<input type="checkbox" name ="eFilters" value="Senegalese">Senegalese<br>
+					<input type="checkbox" name ="eFilters" value="South Asian">South Asian<br>
+					<input type="checkbox" name ="eFilters" value="Syrian">Syrian<br>
+					<input type="checkbox" name ="eFilters" value="Yemeni">Yemeni<br>
+					<input type="button" id="ethnicityFtlrBtn" value="Filter Results">
+				</form>
+			</div>
+			
+			<div id="countyFtlrDiv" style="display: none">
+				<form name="countyFtlr" action="">
+					<input type="checkbox" name ="CoFilters" value="Jim Wells County">Jim Wells County<br>
+					<input type="checkbox" name ="CoFilters" value="Macomb County">Macomb County<br>
+					<input type="checkbox" name ="CoFilters" value="Oakland County">Oakland County<br>
+					<input type="checkbox" name ="CoFilters" value="Sanilac County">Sanilac County<br>
+					<input type="checkbox" name ="CoFilters" value="Washtenaw County">Washtenaw County<br>
+					<input type="checkbox" name ="CoFilters" value="Wayne County">Wayne County<br>
+					<input type="button" id="countyFtlrBtn" value="Filter Results">
+				</form>
+			</div>
+						
+			
 		</div>
 		<div id="SearchTB" class="tabcontent">
 		
 		</div>
+		
+		<script>
+			document.getElementById("defaultOpen").click();
+		</script>
+		
 		<div class="modal" style="display: none;"></div>
 	</body>
 </html>

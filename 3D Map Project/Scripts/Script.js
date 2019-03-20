@@ -1,5 +1,4 @@
 var year;
-
 require([
 	"esri/Map",
 	"esri/Graphic",
@@ -21,6 +20,9 @@ require([
 		
 		var citiesUrl =
 		"https://services9.arcgis.com/DC7lz0T9RX9VsXbK/arcgis/rest/services/cities_townships/FeatureServer";
+		
+		var connUrl = 
+		"https://services9.arcgis.com/DC7lz0T9RX9VsXbK/arcgis/rest/services/pathstest/FeatureServer";
 
 		// sets extent to the area wanted
 		var greaterDetroit = { // autocasts as new Extent()
@@ -42,13 +44,12 @@ require([
 		}
 		
 		function setYear(value){
-			MosquesLayer.renderer = generateRender(value);	
+			MosquesLayer.renderer = generateRender(value);
+			connLayer.renderer = generateConnRender(value);
 		}
 		
 		
-		var exampleButton = document.getElementById("ftlrBtn").onclick= function(){
-			MosquesLayer.definitionExpression=expressionBuilder();
-		}
+		
 		
 		//Code for switching visibility of highlighted layers. 
 		
@@ -66,19 +67,13 @@ require([
 		}
 		
 		
-		//testing code for filters (will be deleted eventually)
-		
-		var testText = document.getElementById("ftlrTest")
-		
-		var testButton = document.getElementById("tstBtn").onclick= function(){
-			var curFltr = expressionBuilder();
-			testText.innerHTML=curFltr;
-			
-		}
-		
-		//Function to build the expression for filters. can expand to fit more later. 
-		function expressionBuilder(){
-			var checks = document.getElementsByName("Filters");
+		/***********************************************************************
+		 *Functions to build the varrious expressions for filtering the map. 
+		 ***********************************************************************/
+		 
+		//function and button for filtering by ethnicity 
+		function EthnicityExpressionBuilder(){
+			var checks = document.getElementsByName("eFilters");
 			var expr ='';
 			var flag = 0;
 			for (i=0; i<4; i++){
@@ -95,42 +90,62 @@ require([
 			return expr;
 		}
 		
-		// masjid al salam to american muslim bekaa center
-		// AMBC Latitude 42.333947 Longitude -83.185875
-		//MAS latitude 42.409022 longitude -83.057406
+		var ethnicityFltrBtn = document.getElementById("ethnicityFtlrBtn").onclick= function(){
+			MosquesLayer.definitionExpression = EthnicityExpressionBuilder();
+		}
 		
-		/* Dwight: Coordinates are not longitude and latitude! Same units as GreaterDetroit extent! */
-		var paths = [[
-			[-9158073.232901145,
-			5125761.087947986],
-			[-9424685.587559769,
-			5372805.56336561]
-		]];
-		var lineGeometry = new Polyline({
-			hasZ: false,
-			hasM: false,
-			paths: paths,
-			spatialReference: {wkid: 3857}
-		});
-		var pathLayer = new PathSymbol3DLayer({
-			size: 100,
-    		material: { color: [226, 119, 40] }
-		});
-		var lineSymbol = new LineSymbol3D({
-			symbolLayers: [pathLayer]
-		});
-		var lineGraphic = new Graphic({
-			geometry: lineGeometry,
-			symbol: lineSymbol
-		});
+		//function and button for filtering by city 
+		function CityExpressionBuilder(){
+			var checks = document.getElementsByName("cFilters");
+			var expr ='';
+			var flag = 0;
+			for (i=0; i<4; i++){
+				if (checks[i].checked===true){
+					if (flag == 0){
+						expr += "City="+ "'"+checks[i].value + "'";
+						flag = 1;
+					}
+					else{
+						expr += " OR " +"City="+ "'"+checks[i].value + "'";
+					}
+				}
+			}
+			return expr;
+		}
 		
+		var cityFltrBtn = document.getElementById("cityFtlrBtn").onclick= function(){
+			MosquesLayer.definitionExpression = CityExpressionBuilder();
+		}
+		
+		//function and button for filtering by county 
+		function CountyExpressionBuilder(){
+			var checks = document.getElementsByName("CoFilters");
+			var expr ='';
+			var flag = 0;
+			for (i=0; i<4; i++){
+				if (checks[i].checked===true){
+					if (flag == 0){
+						expr += "County="+ "'"+checks[i].value + "'";
+						flag = 1;
+					}
+					else{
+						expr += " OR " +"County="+ "'"+checks[i].value + "'";
+					}
+				}
+			}
+			return expr;
+		}
+		
+		var countyFltrBtn = document.getElementById("countyFtlrBtn").onclick= function(){
+			MosquesLayer.definitionExpression = CountyExpressionBuilder();
+		}
 		
 		
       /**************************************************
        * Renderer for symbolizing mosques on time axis
        **************************************************/
 		function generateRender(year){
-			//var testOutput = document.getElementById("yrTest");
+			//var testOutput = document.getElementById("hlModeLbl");
 			
 			var growExp = "return (" + year + "-$feature.OpenDate)*10";
 			//testOutput.innerHTML=String(growExp);
@@ -188,6 +203,50 @@ require([
 				}]
 			}
 		};
+		
+		/***************************************
+		* Function for generating connections. *
+		****************************************/
+		function generateConnRender(year){
+			
+			return {
+				type: "simple",
+				symbol: {
+					type: "line-3d",
+					symbolLayers: [{
+						type: "path",
+						size: 50,
+						material:{
+							color: "red"
+						}
+					}]
+				},
+				visualVariables: [{
+					type: "color",
+					field: "ConYear",
+					stops: [{
+						value: year-1,
+						color: {
+							r: 255,
+							g: 0,
+							b: 0,
+							a: 1,
+						}
+					},
+					{
+						value: year+1,
+						color: {
+							r: 255,
+							g: 0,
+							b: 0,
+							a: 0,
+						}
+					}]
+				}]
+				
+			}	
+		}
+		
 		/*var mosquesSurfaceRenderer = {
 			type: "simple", // autocasts as new SimpleRenderer()
 			symbol: {
@@ -276,6 +335,22 @@ require([
 			renderer: citiesRenderer,
 			
 		});
+		
+		var connLayer = new FeatureLayer({
+			url: connUrl,
+			definitionExpression: "",
+			outFields: ["*"],
+			returnZ: true, 
+			elevationInfo: {
+				mode: "relative-to-ground",
+				offset: 0,
+				featureExpressionInfo: {
+					expression: "$feature.z"
+				}
+				
+			},
+			unit: "meters"
+		});
 
       /********************************************************************
        * Create a map with the above defined layers and a topographic
@@ -283,7 +358,7 @@ require([
        ********************************************************************/
 		var map = new Map({
 			basemap: "dark-gray",
-			layers: [MosquesLayer, countiesLayer, citiesLayer],
+			layers: [MosquesLayer, countiesLayer, citiesLayer, connLayer],
 			ground: {
 				navigationConstraint: {
 					type: "stay-above" //Dwight: Changed 'stayAbove' to 'stay-above' (threw error beforehand)
@@ -321,26 +396,30 @@ require([
 			searchAllEnabled: false,
 			locationEnabled: false,
 			includeDefaultSources: false,
+			popupEnabled: true,
 			sources:[{
 				featureLayer:{
-					url: "https://services9.arcgis.com/DC7lz0T9RX9VsXbK/arcgis/rest/services/filtertest/FeatureServer",
+					url: mosquesUrl,
 					popupTemplate: mosqueTemplate,
 				},
-				searchFields:["Name"],
+				searchFields:["Name","Address"],
 				displayField: "Name",
 				exactMatch: false,
-				outFields: ["Name","Address"],
+				outFields: ["Name","Address","OpenDate","CloseDate","PrimaryEthnicity","link"],
 				name: "sampleName",
 				placeholder: "exampletxt",
 			}]
 		}, SearchTB);
 		
-		/* Dwight: this allows the line to be rendered */
-		view.graphics.add(lineGraphic);
 	}
 );
 
+/*****************************************
+ *Functions used in the html document. 
+ *****************************************/
 
+
+//function for switching inbetween the tab content
 function openTab(evt, tName){
 	var i, tabcontent, tablinks; 
 	
@@ -361,10 +440,28 @@ function openTab(evt, tName){
 	evt.currentTarget.className += " active";
 };
 
+//function for switching between filter options. 
+function setForm(val){
+	if(val == 'cityFtlr'){
+		document.getElementById('cityFtlrDiv').style='display: block;';
+		document.getElementById('countyFtlrDiv').style='display: none;';
+		document.getElementById('prEtFtlrDiv').style='display: none;';
+	}
+	else if (val == 'countyFtlr'){
+		document.getElementById('cityFtlrDiv').style='display: none;';
+		document.getElementById('countyFtlrDiv').style='display: block;';
+		document.getElementById('prEtFtlrDiv').style='display: none;';
+	}
+	else{
+		document.getElementById('cityFtlrDiv').style='display: none;';
+		document.getElementById('countyFtlrDiv').style='display: none;';
+		document.getElementById('prEtFtlrDiv').style='display: block;';
+	}
+};
 
 
 
-
+//function for updating time slider year label 
 function updateYear(){
 	var slider = document.getElementById("myRange");
 	var output = document.getElementById("curYear");
