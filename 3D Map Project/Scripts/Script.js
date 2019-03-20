@@ -145,10 +145,15 @@ require([
        * Renderer for symbolizing mosques on time axis
        **************************************************/
 		function generateRender(year){
-			//var testOutput = document.getElementById("hlModeLbl");
+			//var testOutput = document.getElementById("debugTxt");
 			
-			var growExp = "return (" + year + "-$feature.OpenDate)*10";
-			//testOutput.innerHTML=String(growExp);
+			//old height arcade expressions just in case. 
+			/*var fieldPkr = "When(" + year + "< $feature.OpenDate && " + year +  "< $feature.CloseDate, 'OpenDate'," + year + " >= $feature.OpenDate && " + year + " < $feature.CloseDate, 'OpenDate, " + year + " >= $feature.CloseDate, 'CloseDate', 'CloseDate')" 
+			var growExp1 = "When(" + year + "< $feature.CloseDate,'(" + year + "-$feature.OpenDate)*10'," + year + " >= $feature.CloseDate,'($feature.CloseDate-$feature.OpenDate)*10')";
+			var growExp = "return (" + year + "-$feature.OpenDate)*10";*/
+			
+			var growExp2 = "IIf (" + year + ">= $feature.CloseDate,$feature.Closedate-$feature.OpenDate,"+ year + "-$feature.OpenDate)*10" 
+			//testOutput.innerHTML=String(growExp2);
 			return{
 				type: "simple", // autocasts as new SimpleRenderer()
 				symbol: {
@@ -165,17 +170,16 @@ require([
 						width: 60
 					}]
 				},
-		//signifies variables that can be changed via data
+				//signifies variables that can be changed via data
 				visualVariables: [{
 					type: "size",
-					valueExpression: growExp,
-					//valueExpression: "When($feature.CloseDate<year, ($feature.CloseDate-$feature.OpenDate)*10, $feature.CloseDate>year,(year-$feature.OpenDate)*10)", expression for calculating height based on open date and close date
+					valueExpression: growExp2,
 					axis: "height",
 					valueUnit: "meters"
-				}, 
+				}, 	
 				{
 					type: "color",
-					field: "OpenDate",
+					field: "OpenDate",//change this to oDate when new data is done
 					stops: [{
 						value: year-1,
 						color: {
@@ -195,7 +199,6 @@ require([
 						},
 					}]
 				},
-		
 				{
 					type: "size",
 					axis: "width",
