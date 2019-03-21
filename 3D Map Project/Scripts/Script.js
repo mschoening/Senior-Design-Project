@@ -51,7 +51,12 @@ require([
 		
 		
 		
-		//Code for switching visibility of highlighted layers. 
+		//Code for switching visibility of highlighted layers.
+		
+		function setDefaultHighlightLayer(){
+			citiesLayer.visible = false;
+			countiesLayer.visible = false;
+		}
 		
 		var defaultMapView = document.getElementById("Type1").onclick= function(){
 			citiesLayer.visible = false;
@@ -148,12 +153,9 @@ require([
 			//var testOutput = document.getElementById("debugTxt");
 			
 			//Dwight: visualVariables.valueExpression must be a number! (no strings)
-			var fieldPkr = "When($feature.CloseDate <= " + year + ",1, $feature.OpenDate <= " + year +" && $feature.CloseDate > " + year + ",2,  $feature.OpenDate > " + year + ", 3, 4)";
+			var fieldPkr = "When($feature.CloseDate <= " + year + ",1, $feature.OpenDate <= " + year +" && $feature.CloseDate > " + year + ",2,  $feature.OpenDate > " + year + ", 3, 4)"; // need to change this to CDate and ODate when data is updated 		
 			
-		    //var fieldPkr = "When(" + year + "< $feature.OpenDate, 'NotOpen'," + year + " >= $feature.OpenDate && " + year + " < $feature.CloseDate, 'Open', " + year + " >= $feature.CloseDate, 'Closed', 'n/a')";
-			
-			
-			var growExp2 = "IIf (" + year + ">= $feature.CloseDate,$feature.Closedate-$feature.OpenDate,"+ year + "-$feature.OpenDate)*10";
+			var growExp2 = "IIf (" + year + ">= $feature.CloseDate,$feature.Closedate-$feature.OpenDate,"+ year + "-$feature.OpenDate)*10"; // need to change this to CDate and ODate when data is updated 
 			//testOutput.innerHTML=String(growExp2);
 			return{
 				type: "simple", // autocasts as new SimpleRenderer()
@@ -178,31 +180,7 @@ require([
 					axis: "height",
 					valueUnit: "meters"
 				}, 
-
-				//Previous working code. 
-				/*{
-					type: "color",
-					field: "OpenDate",//change this to oDate when new data is done
-					stops: [{
-						value: year-1,
-						color: {
-							r: 245,
-							g: 41,
-							b: 235,
-							a: 1
-						}
-					},
-					{
-						value: year+1,
-						color: {
-							r: 245,
-							g: 41,
-							b: 235,
-							a: 0
-						},
-					}]
-				},*/
-				//expieremental code that does not work. Dwight: Works now!
+				//code that controls what color the mosques turn based on the time slider.
 				{
 					type: "color",
 					valueExpression: fieldPkr,//change this to oDate when new data is done
@@ -221,16 +199,16 @@ require([
 							r: 245,
 							g: 41,
 							b: 235,
-							a: 0.4
+							a: 1
 						},
 					},
 					{
 						value: 1,
 						color: {
-							r: 245,
-							g: 41,
-							b: 235,
-							a: 1
+							r: 23,
+							g: 173,
+							b: 178,
+							a: 0.5
 						},
 					},
 					{
@@ -295,7 +273,7 @@ require([
 			}	
 		}
 		
-		/*var mosquesSurfaceRenderer = {
+		var mosquesSurfaceRenderer = {
 			type: "simple", // autocasts as new SimpleRenderer()
 			symbol: {
 				type: "point-3d", // autocasts as new PointSymbol3D()
@@ -310,7 +288,7 @@ require([
 					size: 4
 				}]
 			}
-		};*/
+		};
 		
 		var countiesRenderer = {
 			type: "simple", // autocasts as new SimpleRenderer()
@@ -321,7 +299,7 @@ require([
 					48,
 					50,
 					92,
-					.5
+					0.5
 				],
 			}	
 		}
@@ -334,7 +312,7 @@ require([
 					48,
 					50,
 					92,
-					.5
+					0.5
 				],
 			}	
 		}
@@ -371,12 +349,14 @@ require([
 			unit: "meters"
 		});   
 		
+		// Layer for depecting county highlighting. 
 		var countiesLayer = new FeatureLayer({
 			url: countiesUrl,
 			outFields: ["*"],
 			renderer: countiesRenderer,	
 		});
 		
+		// Layer for depecting city highlighting. 
 		var citiesLayer = new FeatureLayer({
 			url: citiesUrl,
 			outFields: ["*"],
@@ -384,6 +364,7 @@ require([
 			
 		});
 		
+		// Layer for depecting connections between mosques. 
 		var connLayer = new FeatureLayer({
 			url: connUrl,
 			definitionExpression: "",
@@ -399,6 +380,18 @@ require([
 			},
 			unit: "meters"
 		});
+		
+		// Layer for depecting mosques on the ground. 
+		var mosquesSurfaceLayer = new FeatureLayer({
+			url: mosquesUrl,
+			definitionExpression: "",
+			outFields: ["*"],
+			popupTemplate: mosqueTemplate,
+			renderer: mosquesSurfaceRenderer,
+			elevationInfo: {
+				mode: "on-the-ground"
+			}
+		});
 
       /********************************************************************
        * Create a map with the above defined layers and a topographic
@@ -406,7 +399,7 @@ require([
        ********************************************************************/
 		var map = new Map({
 			basemap: "dark-gray",
-			layers: [MosquesLayer, countiesLayer, citiesLayer, connLayer],
+			layers: [MosquesLayer, countiesLayer, citiesLayer, connLayer, mosquesSurfaceLayer],
 			ground: {
 				navigationConstraint: {
 					type: "stay-above" //Dwight: Changed 'stayAbove' to 'stay-above' (threw error beforehand)
@@ -414,6 +407,7 @@ require([
 			}
 		});
 		setYear(1900);
+		setDefaultHighlightLayer();
 
       /********************************************************************
        * Create a local scene 
@@ -507,8 +501,6 @@ function setForm(val){
 	}
 };
 
-
-
 //function for updating time slider year label 
 function updateYear(){
 	var slider = document.getElementById("myRange");
@@ -517,6 +509,7 @@ function updateYear(){
 	output.innerHTML = year;
 	//setYear(year);
 };
+
 
 
 
