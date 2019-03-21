@@ -147,7 +147,8 @@ require([
 		function generateRender(year){
 			//var testOutput = document.getElementById("debugTxt");
 			
-			var fieldPkr = "When($feature.CloseDate <= " + year + ",'Closed', $feature.OpenDate >= " + year +" && $feature.CloseDate > " + year + ",'Open',  $feature.OpenDate > " + year + ", 'NotOpen', 'n/a')";
+			//Dwight: visualVariables.valueExpression must be a number! (no strings)
+			var fieldPkr = "When($feature.CloseDate <= " + year + ",1, $feature.OpenDate <= " + year +" && $feature.CloseDate > " + year + ",2,  $feature.OpenDate > " + year + ", 3, 4)";
 			
 		    //var fieldPkr = "When(" + year + "< $feature.OpenDate, 'NotOpen'," + year + " >= $feature.OpenDate && " + year + " < $feature.CloseDate, 'Open', " + year + " >= $feature.CloseDate, 'Closed', 'n/a')";
 			
@@ -179,7 +180,7 @@ require([
 				}, 
 
 				//Previous working code. 
-				{
+				/*{
 					type: "color",
 					field: "OpenDate",//change this to oDate when new data is done
 					stops: [{
@@ -200,13 +201,13 @@ require([
 							a: 0
 						},
 					}]
-				},
-				//expieremental code that does not work. 
-				/*{
+				},*/
+				//expieremental code that does not work. Dwight: Works now!
+				{
 					type: "color",
 					valueExpression: fieldPkr,//change this to oDate when new data is done
 					stops: [{
-						value: "NotOpen",
+						value: 3,
 						color: {
 							r: 245,
 							g: 41,
@@ -215,7 +216,7 @@ require([
 						}, 
 					},
 					{
-						value: "Open",
+						value: 2,
 						color: {
 							r: 245,
 							g: 41,
@@ -224,7 +225,7 @@ require([
 						},
 					},
 					{
-						value: "Closed",
+						value: 1,
 						color: {
 							r: 245,
 							g: 41,
@@ -233,7 +234,7 @@ require([
 						},
 					},
 					{
-						value: "n/a",
+						value: 4,
 						color: {
 							r: 255,
 							g: 102,
@@ -242,7 +243,7 @@ require([
 						},
 					}]
 					
-				},*/
+				},
 				{
 					type: "size",
 					axis: "width",
@@ -516,4 +517,6 @@ function updateYear(){
 	output.innerHTML = year;
 	//setYear(year);
 };
+
+
 
