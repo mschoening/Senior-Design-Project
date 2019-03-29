@@ -22,7 +22,7 @@ require([
 		"https://services9.arcgis.com/DC7lz0T9RX9VsXbK/arcgis/rest/services/cities_townships/FeatureServer";
 		
 		var connUrl = 
-		"https://services9.arcgis.com/DC7lz0T9RX9VsXbK/arcgis/rest/services/pathstest/FeatureServer";
+		"https://services9.arcgis.com/DC7lz0T9RX9VsXbK/arcgis/rest/services/updatedconn/FeatureServer";
 
 		// sets extent to the area wanted
 		var greaterDetroit = { // autocasts as new Extent()
@@ -328,7 +328,7 @@ require([
 				},
 				visualVariables: [{
 					type: "color",
-					field: "ConYear",
+					field: "StartDate",
 					stops: [{
 						value: year-1,
 						color: {
