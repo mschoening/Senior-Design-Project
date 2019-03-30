@@ -46,7 +46,7 @@ require([
 		function setYear(value){
 			MosquesLayer.renderer = generateRender(value);
 			connLayer.renderer = generateConnRender(value);
-			topShpheresLayer.renderer = generateTopShpereRender(value);
+			topShpheresLayer.renderer = generateTopSphereRender(value);
 			topShpheresLayer.elevationInfo = generateSphereHeight(value);
 			
 		}
@@ -236,7 +236,7 @@ require([
 		
 		//Function for generating the top spheres. 
 		
-		function generateTopShpereRender(year){
+		function generateTopSphereRender(year){
 			var fieldPkr = "When($feature.CloseDate <= " + year + ",1, $feature.OpenDate <= " + year +" && $feature.CloseDate > " + year + ",2,  $feature.OpenDate > " + year + ", 3, 4)"; // need to change this to CDate and ODate when data is updated 		
 			
 			//testOutput.innerHTML=String(growExp2);
