@@ -46,8 +46,8 @@ require([
 		function setYear(value){
 			MosquesLayer.renderer = generateRender(value);
 			connLayer.renderer = generateConnRender(value);
-			topShpheresLayer.renderer = generateTopSphereRender(value);
-			topShpheresLayer.elevationInfo = generateSphereHeight(value);
+			topSpheresLayer.renderer = generateTopSphereRender(value);
+			topSpheresLayer.elevationInfo = generateSphereHeight(value);
 			
 		}
 		
@@ -434,7 +434,7 @@ require([
 		});
 		
 		//Layer for depecting top spheres. 
-		var topShpheresLayer = new FeatureLayer({
+		var topSpheresLayer = new FeatureLayer({
 			url: mosquesUrl,
 			definitionExpression: "",
 			outFields: ["*"],
@@ -492,7 +492,7 @@ require([
        ********************************************************************/
 		var map = new Map({
 			basemap: "dark-gray",
-			layers: [MosquesLayer, countiesLayer, citiesLayer, connLayer, mosquesSurfaceLayer,topShpheresLayer],
+			layers: [MosquesLayer, countiesLayer, citiesLayer, connLayer, mosquesSurfaceLayer,topSpheresLayer],
 			ground: {
 				navigationConstraint: {
 					type: "stay-above" //Dwight: Changed 'stayAbove' to 'stay-above' (threw error beforehand)
