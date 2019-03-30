@@ -1,0 +1,99 @@
+ html,
+ body,
+ #viewDiv {
+	padding: 0;
+    margin: 0;
+    height: 100%;
+    width: 93%;
+	float: right;
+}
+
+#homeDiv {
+    left: 15px;
+    top: 130px;
+    z-index: 35;
+    position: absolute;
+}
+#filterOptions{
+	position: fixed;
+	bottom: 0;
+	left: 0;
+}
+.tab {
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: #7e838c;
+  position: absolute;
+  width: 19.54%;
+  height: 99.8%;
+  float: left;
+  left: 0;
+  top: 0;
+ 
+}
+.tab button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+}
+.tab button:hover {
+  background-color: #ddd;
+}
+.tab button.active {
+  background-color: #ccc;
+}
+.tabcontent {
+  display: none;
+  position: absolute;
+  float: left;
+  width: 19.03%;
+  height: 80%;
+  left: 0;
+  top: 70px;
+  background: #7e838c;
+  padding-left: 10px;
+  
+}
+
+.slider {
+  -webkit-appearance: slider-vertical;  /* Override default CSS styles */
+  appearance: none;
+  align: center; 
+  width: 100%; /* Full-width */
+  height: 70%; /* Specified height */
+  background: #7e838c; /* Grey background */
+  outline: none; /* Remove outline */
+  opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+  -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+  transition: opacity .2s;
+}
+
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none; /* Override default look */
+  appearance: none;
+  width: 25px; /* Set a specific slider handle width */
+  height: 25px; /* Slider handle height */
+  background: #4CAF50; /* Green background */
+  cursor: pointer; /* Cursor on hover */
+}
+#curYear {
+	text-align: center;
+}
+#hlModeLbl {
+	padding-left: 10px;
+}
+
+#SearchTB {
+	width: 19.54%;
+	height: 80%;
+	background-color: #7e838c;
+}
+
+
+
+

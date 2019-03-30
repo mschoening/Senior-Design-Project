@@ -1,0 +1,1 @@
+If Flickr galleries do not show up, log into the flickr account.

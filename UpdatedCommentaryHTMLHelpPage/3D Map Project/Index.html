@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+		<title>3D Interactive Map</title>
+		<link rel="stylesheet" href="Styles/Style.css"> <!--Dwight: removed '...' -->
+		<link rel="stylesheet" href="https://js.arcgis.com/4.9/esri/css/main.css">
+		<script src="https://js.arcgis.com/4.9/"></script> <!--Dwight: reordered script just in case -->
+		<script src="Scripts/Script.js"></script> <!--Dwight: removed '...' -->
+		<!-- jQuery -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+		<!-- jQuery Modal -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+
+	</head>
+
+	<body>
+		<div id="viewDiv"></div>
+		<!--<div id="homeDiv"></div-->
+		<div class="tab">
+			<button class="tablinks" onclick="openTab(event, 'Time Slider')" id="defaultOpen">Time Slider</button>
+			<button class="tablinks" onclick="openTab(event, 'Filter')">Filter</button>
+			<button class="tablinks" onclick="openTab(event, 'SearchTB')">Search</button>
+			<a href = "help.html" rel='modal:open'><button class="tablinks">Help</button></a>
+		<!--	<button class="tablinks" onclick= "openTab(event, 'HelpMenu')">Help</button> -->
+		</div>
+
+		<!-- Tab Content -->
+		<div id="Time Slider" class="tabcontent"> <!--Time Slider tab-->
+			<input type="range" min="1900" max="2018" value="1900" class="slider" id="myRange" oninput="updateYear()">
+			<h2 id="curYear">1900</h2>
+			<p id="hlModeLbl">Map Highlight Mode</p>
+			<input type="radio" name="Type" id="Type1" value="Default" checked="checked"> Default
+			<input type="radio" name="Type" id="Type2" value="Counties"> Counties
+			<input type="radio" name="Type" id="Type3" value="Cities"> Cities
+			<!--p id="debugTxt"></p-->
+		</div> <!-- End Time Slider Tab-->
+
+		<div id="Filter" class="tabcontent"> <!-- Tab Content tab-->
+			<p>Filter by:</p>
+			<select id="ftlrSelect" onchange="setForm(this.value)">
+				<option value="cityFtlr">City</option>
+				<option value="countyFtlr">County</option>
+				<option value="ethnicityFtlr">Primary Ethnicity</option>
+			</select>
+<!-- Need to use CSS to close that large space between Filter button and filter by: -->
+
+			<div id="cityFtlrDiv"> <!-- filter city options div-->
+				<form method="post" name="cityFtlr" action="">
+					<input type="checkbox" name ="cFilters" value="Bloomfield Hills">Bloomfield Hills<br>
+					<input type="checkbox" name ="cFilters" value="Brownstown">Brownstown<br>
+					<input type="checkbox" name ="cFilters" value="Canton">Canton<br>
+					<input type="checkbox" name ="cFilters" value="Dearborn">Dearborn<br>
+					<input type="checkbox" name ="cFilters" value="Dearborn Heights">Dearborn Heights<br>
+					<input type="checkbox" name ="cFilters" value="Detroit">Detroit<br>
+					<input type="checkbox" name ="cFilters" value="Eastpointe">Eastpointe<br>
+					<input type="checkbox" name ="cFilters" value="Farmington Hills">Farmington Hills<br>
+					<input type="checkbox" name ="cFilters" value="Franklin">Franklin<br>
+					<input type="checkbox" name ="cFilters" value="Garden City">Garden City<br>
+					<input type="checkbox" name ="cFilters" value="Hamtramck">Hamtramck<br>
+					<input type="checkbox" name ="cFilters" value="Harper Woods">Harper Woods<br>
+					<input type="checkbox" name ="cFilters" value="Highland Park">Highland Park<br>
+					<input type="checkbox" name ="cFilters" value="Inkster">Inkster<br>
+					<input type="checkbox" name ="cFilters" value="Lincoln Park">Lincoln Park<br>
+					<input type="checkbox" name ="cFilters" value="Madison Heights">Madison Heights<br>
+					<input type="checkbox" name ="cFilters" value="Oak Park">Oak Park<br>
+					<input type="checkbox" name ="cFilters" value="Pontiac">Pontiac<br>
+					<input type="checkbox" name ="cFilters" value="Rochester Hills">Rochester Hills<br>
+					<input type="checkbox" name ="cFilters" value="Southfield">Southfield<br>
+					<input type="checkbox" name ="cFilters" value="St. Clair Shores">St. Clair Shores<br>
+					<input type="checkbox" name ="cFilters" value="Sterling Heights">Sterling Heights<br>
+					<input type="checkbox" name ="cFilters" value="Taylor">Taylor<br>
+					<input type="checkbox" name ="cFilters" value="Walled Lake">Walled Lake<br>
+					<input type="checkbox" name ="cFilters" value="Warren">Warren<br>
+					<input type="checkbox" name ="cFilters" value="Waterford">Waterford<br>
+					<input type="checkbox" name ="cFilters" value="Westland">Westland<br>
+					<input type="checkbox" name ="cFilters" value="Windsor">Windsor<br>
+					<input type="checkbox" name ="cFilters" value="Ypsilanti">Ypsilanti<br>
+					<input type="button" id="cityFtlrBtn" value="Filter Results">
+				</form>
+			</div> <!-- City options div end-->
+
+			<div id="prEtFtlrDiv" style="display: none"> <!-- Filter Ethnicity options div-->
+				<form name="ethnicityFtlr" action="">
+					<input type="checkbox" name ="eFilters" value="African">African<br>
+					<input type="checkbox" name ="eFilters" value="African American">African American<br>
+					<input type="checkbox" name ="eFilters" value="Albanian">Albanian<br>
+					<input type="checkbox" name ="eFilters" value="Arab">Arab<br>
+					<input type="checkbox" name ="eFilters" value="Asian">Asian<br>
+					<input type="checkbox" name ="eFilters" value="Bangladeshi">Bangladeshi<br>
+					<input type="checkbox" name ="eFilters" value="Bosnian">Bosnian<br>
+					<input type="checkbox" name ="eFilters" value="Egyptian">Egyptian<br>
+					<input type="checkbox" name ="eFilters" value="Indian">Indian<br>
+					<input type="checkbox" name ="eFilters" value="Iraqi">Iraqi<br>
+					<input type="checkbox" name ="eFilters" value="Lebanese">Lebanese<br>
+					<input type="checkbox" name ="eFilters" value="Lebanese American">Lebanese American<br>
+					<input type="checkbox" name ="eFilters" value="Mixed">Mixed<br>
+					<input type="checkbox" name ="eFilters" value="Senegalese">Senegalese<br>
+					<input type="checkbox" name ="eFilters" value="South Asian">South Asian<br>
+					<input type="checkbox" name ="eFilters" value="Syrian">Syrian<br>
+					<input type="checkbox" name ="eFilters" value="Yemeni">Yemeni<br>
+					<input type="button" id="ethnicityFtlrBtn" value="Filter Results">
+				</form>
+			</div> <!-- End Ethnicity options div-->
+
+			<div id="countyFtlrDiv" style="display: none"> <!-- Filter county option div-->
+				<form name="countyFtlr" action="">
+					<input type="checkbox" name ="CoFilters" value="Jim Wells County">Jim Wells County<br>
+					<input type="checkbox" name ="CoFilters" value="Macomb County">Macomb County<br>
+					<input type="checkbox" name ="CoFilters" value="Oakland County">Oakland County<br>
+					<input type="checkbox" name ="CoFilters" value="Sanilac County">Sanilac County<br>
+					<input type="checkbox" name ="CoFilters" value="Washtenaw County">Washtenaw County<br>
+					<input type="checkbox" name ="CoFilters" value="Wayne County">Wayne County<br>
+					<input type="button" id="countyFtlrBtn" value="Filter Results">
+				</form>
+			</div>
+		</div> <!-- end filter county div -->
+
+<!--	Filter tabs help option (backup option instead of pop up)
+					<div id="HelpMenu" class = "tabcontent">
+						<form name = "HelpMenu" action = "">
+							<p>Help options:</p>
+							<select id="selectOptions" onchange="setForm(this.value)">
+								<option value="About">About</option>
+								<option value="Time Slider">Time Slider</option>
+								<option value="Filter">Filter</option>
+								<option value ="Search">Search</option>
+							</select>
+						</form>
+					</div>
+-->
+		<div id="SearchTB" class="tabcontent">
+
+		</div>
+
+		<script>
+			document.getElementById("defaultOpen").click();
+		</script>
+
+		<div class="modal" style="display: none;"></div>
+	</body>
+</html>
