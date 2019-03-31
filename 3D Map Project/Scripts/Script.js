@@ -24,6 +24,12 @@ require([
 		var connUrl = 
 		"https://services9.arcgis.com/DC7lz0T9RX9VsXbK/arcgis/rest/services/updatedconn/FeatureServer";
 
+		// height-to-year ratio used by objects that grow from the time slider (how many meters of height for every year)
+		growScale = 10
+		
+		// Z-Scaling Constant: for stretching height of everything in Z-Axis
+		zScale = 10
+
 		// sets extent to the area wanted
 		var greaterDetroit = { // autocasts as new Extent()
 			xmax:-9158073.232901145,
@@ -159,7 +165,7 @@ require([
 			//Dwight: visualVariables.valueExpression must be a number! (no strings)
 			var fieldPkr = "When($feature.CloseDate <= " + year + ",1, $feature.OpenDate <= " + year +" && $feature.CloseDate > " + year + ",2,  $feature.OpenDate > " + year + ", 3, 4)"; // need to change this to CDate and ODate when data is updated 		
 			
-			var growExp2 = "IIf (" + year + ">= $feature.CloseDate,$feature.Closedate-$feature.OpenDate,"+ year + "-$feature.OpenDate)*10"; // need to change this to CDate and ODate when data is updated 
+			var growExp2 = "IIf (" + year + ">= $feature.CloseDate,$feature.Closedate-$feature.OpenDate,"+ year + "-$feature.OpenDate)*" + growScale * zScale; // need to change this to CDate and ODate when data is updated 
 			//testOutput.innerHTML=String(growExp2);
 			return{
 				type: "simple", // autocasts as new SimpleRenderer()
@@ -301,7 +307,7 @@ require([
 		//Function to generate top shpere height
 		
 		function generateSphereHeight(year){
-			genHeight = "IIf (" + year + ">= $feature.CloseDate, $feature.z + (($feature.Closedate-$feature.OpenDate) * 10) - 5, $feature.z + (("+ year + "-$feature.OpenDate)*10) - 5)";
+			genHeight = "IIf (" + year + ">= $feature.CloseDate, ($feature.z * " + zScale + ") + (($feature.Closedate-$feature.OpenDate) * " + (growScale * zScale) + ") - 5, ($feature.z * " + zScale + " ) + (("+ year + "-$feature.OpenDate)*" + (growScale * zScale) + ") - 5)";
 			return{
 				
 				mode: "relative-to-ground",
@@ -427,7 +433,8 @@ require([
 			elevationInfo: {
 				mode: "relative-to-ground",
 				featureExpressionInfo:{
-					expression: "Geometry($feature).z + $feature.z"
+					//expression: "Geometry($feature).z + $feature.z" //Dwight: Is Geometry() necessary?
+					expression: "$feature.z * " + zScale
 				}
 			},
 			unit: "meters"
@@ -467,7 +474,7 @@ require([
 				mode: "relative-to-ground",
 				offset: 0,
 				featureExpressionInfo: {
-					expression: "$feature.z"
+					expression: "$feature.z * " + zScale
 				}
 				
 			},
