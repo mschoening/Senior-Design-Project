@@ -57,6 +57,72 @@ require([
 			
 		}
 		
+		/*************************************************
+		 * Functions to automatically advance the slider
+		 *************************************************/
+		 
+		//Function for automatically animating the slider
+		var flag = 0;
+		
+		function animateSlider(){
+			
+			var slider = document.getElementById("myRange");
+			var output = document.getElementById("curYear");
+			
+			var year = parseInt(slider.value);
+			if (year + 1 > 2019){
+				
+				slider.value = "1900";
+				output.innerHTML = 1900;
+				setYear(1900);
+			}
+			else{
+				year++;
+				slider.value =  year.toString();
+				output.innerHTML = year;
+				setYear(year);
+			}
+			while (flag == 1){
+				setTimeout(animateSlider(), 5000);
+			}
+			
+		}
+		
+		attachEvent(window, 'load', function(){
+			var idleTime = 10;
+			var idleTimer;
+
+			function resetIdleTimer(){
+				clearTimeout(idleTimer)
+				flag = 0;
+				idleTimer = setTimeout(idleMode,idleTime*1000);
+			}
+			attachEvent(document.body,'mousemove', resetIdleTimer);
+			attachEvent(document.body,'keydown',resetIdleTimer);
+			attachEvent(document.body,'click',resetIdleTimer);
+		
+			resetIdleTimer();
+		})
+	
+		function idleMode(){
+			flag = 1;
+			animateSlider();
+			//setTimeout(animateSlider(), 5000);
+			
+		};
+
+
+
+		function attachEvent(obj,evt,fnc,useCapture){
+			if (obj.addEventListener){
+				obj.addEventListener(evt,fnc,!!useCapture);
+				return true;
+			} 
+			else if (obj.attachEvent){
+				return obj.attachEvent("on"+evt,fnc);
+			}
+	
+		}
 		
 		
 		
@@ -80,6 +146,10 @@ require([
 			countiesLayer.visible = false;
 		}
 		
+		
+		//var test = document.getElementById("tstBtn").onclick= function(){
+		//	animateSlider();
+		//}
 		
 		/***********************************************************************
 		 *Functions to build the varrious expressions for filtering the map. 
@@ -415,7 +485,7 @@ require([
 		   "<b>Open Date:</b> {OpenDate}<br>"+
 		   "<b>Close Date:</b> {CloseDate}<br>"+ 
 		   "<b>Primary Ethnicity:</b> {PrimaryEthnicity}<br>"+
-		   "<a href={Link} rel='modal:open'>Click Here To Learn More</a>"
+		   "<a href='ExpandedInfo.php?id={Link}' rel='modal:open'><button>Tap Here To Learn More</button></a>"
 		 };
 
 
@@ -609,6 +679,9 @@ function updateYear(){
 	output.innerHTML = year;
 	//setYear(year);
 };
+
+
+
 
 
 
