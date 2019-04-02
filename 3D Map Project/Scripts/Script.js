@@ -13,7 +13,7 @@ require([
 	function(Map, Graphic, SceneView, FeatureLayer, Home, Search, Polyline, LineSymbol3D, PathSymbol3DLayer) {
 
 		var mosquesUrl =
-        "https://services9.arcgis.com/DC7lz0T9RX9VsXbK/arcgis/rest/services/filtertest/FeatureServer";
+        "https://services9.arcgis.com/DC7lz0T9RX9VsXbK/arcgis/rest/services/finalsorteddata/FeatureServer";
 		
 		var countiesUrl =
 		"https://services9.arcgis.com/DC7lz0T9RX9VsXbK/arcgis/rest/services/counties_v17a/FeatureServer";
@@ -82,9 +82,9 @@ require([
 				output.innerHTML = year;
 				setYear(year);
 			}
-			while (flag == 1){
+			/*while (flag == 1){
 				setTimeout(animateSlider(), 5000);
-			}
+			}*/
 			
 		}
 		
@@ -93,8 +93,9 @@ require([
 			var idleTimer;
 
 			function resetIdleTimer(){
-				clearTimeout(idleTimer)
-				flag = 0;
+				//clearInterval(idleMode)
+				clearTimeout(idleTimer);
+				//flag = 0;
 				idleTimer = setTimeout(idleMode,idleTime*1000);
 			}
 			attachEvent(document.body,'mousemove', resetIdleTimer);
@@ -105,9 +106,8 @@ require([
 		})
 	
 		function idleMode(){
-			flag = 1;
-			animateSlider();
-			//setTimeout(animateSlider(), 5000);
+			
+			idleModeSet = setInterval(animateSlider(), 1000);
 			
 		};
 
@@ -158,12 +158,12 @@ require([
 		//function and button for filtering by ethnicity 
 		function EthnicityExpressionBuilder(){
 			var checks = document.getElementsByName("eFilters");
-			var expr ='';
+			var expr ='hasAllFeatures = 1';
 			var flag = 0;
 			for (i=0; i<4; i++){
 				if (checks[i].checked===true){
 					if (flag == 0){
-						expr += "PrimaryEthnicity="+ "'"+checks[i].value + "'";
+						expr += " AND PrimaryEthnicity="+ "'"+checks[i].value + "'";
 						flag = 1;
 					}
 					else{
@@ -176,17 +176,18 @@ require([
 		
 		var ethnicityFltrBtn = document.getElementById("ethnicityFtlrBtn").onclick= function(){
 			MosquesLayer.definitionExpression = EthnicityExpressionBuilder();
+			topSpheresLayer.definitionExpression = EthnicityExpressionBuilder();
 		}
 		
 		//function and button for filtering by city 
 		function CityExpressionBuilder(){
 			var checks = document.getElementsByName("cFilters");
-			var expr ='';
+			var expr ='hasAllFeatures = 1';
 			var flag = 0;
 			for (i=0; i<4; i++){
 				if (checks[i].checked===true){
 					if (flag == 0){
-						expr += "City="+ "'"+checks[i].value + "'";
+						expr += " AND City="+ "'"+checks[i].value + "'";
 						flag = 1;
 					}
 					else{
@@ -199,17 +200,18 @@ require([
 		
 		var cityFltrBtn = document.getElementById("cityFtlrBtn").onclick= function(){
 			MosquesLayer.definitionExpression = CityExpressionBuilder();
+			topSpheresLayer.definitionExpression = CityExpressionBuilder();
 		}
 		
 		//function and button for filtering by county 
 		function CountyExpressionBuilder(){
 			var checks = document.getElementsByName("CoFilters");
-			var expr ='';
+			var expr ='hasAllFeatures = 1';
 			var flag = 0;
 			for (i=0; i<4; i++){
 				if (checks[i].checked===true){
 					if (flag == 0){
-						expr += "County="+ "'"+checks[i].value + "'";
+						expr += " AND County="+ "'"+checks[i].value + "'";
 						flag = 1;
 					}
 					else{
@@ -222,6 +224,7 @@ require([
 		
 		var countyFltrBtn = document.getElementById("countyFtlrBtn").onclick= function(){
 			MosquesLayer.definitionExpression = CountyExpressionBuilder();
+			topSpheresLayer.definitionExpression = CountyExpressionBuilder();
 		}
 		
 		/***********************************************************
@@ -233,9 +236,9 @@ require([
 			//var testOutput = document.getElementById("debugTxt");
 			
 			//Dwight: visualVariables.valueExpression must be a number! (no strings)
-			var fieldPkr = "When($feature.CloseDate <= " + year + ",1, $feature.OpenDate <= " + year +" && $feature.CloseDate > " + year + ",2,  $feature.OpenDate > " + year + ", 3, 4)"; // need to change this to CDate and ODate when data is updated 		
+			var fieldPkr = "When($feature.Cdate <= " + year + ",1, $feature.Odate <= " + year +" && $feature.Cdate > " + year + ",2,  $feature.Odate > " + year + ", 3, 4)"; // need to change this to CDate and ODate when data is updated 		
 			
-			var growExp2 = "IIf (" + year + ">= $feature.CloseDate,$feature.Closedate-$feature.OpenDate,"+ year + "-$feature.OpenDate)*" + growScale * zScale; // need to change this to CDate and ODate when data is updated 
+			var growExp2 = "IIf (" + year + ">= $feature.Cdate,$feature.Closedate-$feature.Odate,"+ year + "-$feature.Odate)*" + growScale * zScale; // need to change this to CDate and ODate when data is updated 
 			//testOutput.innerHTML=String(growExp2);
 			return{
 				type: "simple", // autocasts as new SimpleRenderer()
@@ -313,7 +316,7 @@ require([
 		//Function for generating the top spheres. 
 		
 		function generateTopSphereRender(year){
-			var fieldPkr = "When($feature.CloseDate <= " + year + ",1, $feature.OpenDate <= " + year +" && $feature.CloseDate > " + year + ",2,  $feature.OpenDate > " + year + ", 3, 4)"; // need to change this to CDate and ODate when data is updated 		
+			var fieldPkr = "When($feature.Cdate <= " + year + ",1, $feature.Odate <= " + year +" && $feature.Cdate > " + year + ",2,  $feature.Odate > " + year + ", 3, 4)"; // need to change this to CDate and ODate when data is updated 		
 			
 			//testOutput.innerHTML=String(growExp2);
 			return{
@@ -377,7 +380,7 @@ require([
 		//Function to generate top shpere height
 		
 		function generateSphereHeight(year){
-			genHeight = "IIf (" + year + ">= $feature.CloseDate, ($feature.z * " + zScale + ") + (($feature.Closedate-$feature.OpenDate) * " + (growScale * zScale) + ") - 5, ($feature.z * " + zScale + " ) + (("+ year + "-$feature.OpenDate)*" + (growScale * zScale) + ") - 5)";
+			genHeight = "IIf (" + year + ">= $feature.Cdate, ($feature.z * " + zScale + ") + (($feature.Closedate-$feature.Odate) * " + (growScale * zScale) + ") - 5, ($feature.z * " + zScale + " ) + (("+ year + "-$feature.Odate)*" + (growScale * zScale) + ") - 5)";
 			return{
 				
 				mode: "relative-to-ground",
@@ -496,7 +499,7 @@ require([
       // Layer for depicting mosques on time axis
 		var MosquesLayer = new FeatureLayer({
 			url: mosquesUrl,
-			definitionExpression: "",
+			definitionExpression: "hasAllFeatures = 1",
 			outFields: ["*"],
 			popupTemplate: mosqueTemplate,
 			returnZ: true,
@@ -513,7 +516,7 @@ require([
 		//Layer for depecting top spheres. 
 		var topSpheresLayer = new FeatureLayer({
 			url: mosquesUrl,
-			definitionExpression: "",
+			definitionExpression: "hasAllFeatures = 1",
 			outFields: ["*"],
 			popupTemplate: mosqueTemplate,
 			returnZ: true
@@ -617,9 +620,9 @@ require([
 				searchFields:["Name","Address"],
 				displayField: "Name",
 				exactMatch: false,
-				outFields: ["Name","Address","OpenDate","CloseDate","PrimaryEthnicity","link"],
+				outFields: ["Name","Address","OpenDate","CloseDate","PrimaryEthnicity","Link"],
 				name: "sampleName",
-				placeholder: "exampletxt",
+				placeholder: "Search",
 			}]
 		}, SearchTB);
 		
