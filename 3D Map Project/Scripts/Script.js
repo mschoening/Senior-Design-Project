@@ -1,4 +1,5 @@
 var year;
+var animation = null;
 require([
 	"esri/Map",
 	"esri/Graphic",
@@ -57,78 +58,108 @@ require([
 			
 		}
 		
-		/*************************************************
-		 * Functions to automatically advance the slider
-		 *************************************************/
+		/***************************************************************
+		 * Functions to automatically animate the map during idle mode.*
+		 ***************************************************************/
 		 
-		//Function for automatically animating the slider
-		var flag = 0;
-		
-		function animateSlider(){
+		//Function for automatically animating the map slider		
+		function animateSlider(value){
 			
 			var slider = document.getElementById("myRange");
 			var output = document.getElementById("curYear");
 			
-			var idlerMode;
+			output.innerHTML = Math.floor(value);
+			slider.value = Math.floor(value);
 			
-			var year = parseInt(slider.value);
-			if (year + 1 > 2019){
+			MosquesLayer.renderer = generateRender(value);
+			connLayer.renderer = generateConnRender(value);
+			topSpheresLayer.renderer = generateTopSphereRender(value);
+			topSpheresLayer.elevationInfo = generateSphereHeight(value);
+		}
+		
+		//Function to set up the inactivity listeners. 	
+		function setInactivityListeners(){
+			this.addEventListener("mousemove", resetInactivityTimer, false);
+			this.addEventListener("mousedown", resetInactivityTimer, false);
+			this.addEventListener("keypress", resetInactivityTimer, false);
+			this.addEventListener("DOMMouseScroll", resetInactivityTimer, false);
+			this.addEventListener("mousewheel", resetInactivityTimer, false);
+			this.addEventListener("touchmove", resetInactivityTimer, false);
+			this.addEventListener("MSPointerMove", resetInactivityTimer, false);
+			
+			startInactivityTimer();
+		}
+		
+		setInactivityListeners();
+		
+		//Function to start the inactivity timer
+		function startInactivityTimer(){
+			timeoutID = window.setTimeout(goInactive, 5000);
+		}
+		
+		//Function to reset the inactivity timer
+		function resetInactivityTimer(e){
+			window.clearTimeout(timeoutID);
+			
+			goActive();
+			
+		}
+		
+		//Function to start the idle mode
+		function goInactive(){
+			startMapAnimation();
+		}
+		
+		//Function to stop the idle mode
+		function goActive(){
+			stopMapAnimation();
+			startInactivityTimer();
+		}
+		
+		//Function to start the map animation
+		function startMapAnimation(){
+			var slider = document.getElementById("myRange");
+			
+			stopMapAnimation();
+			animation = animateMap(parseInt(slider.value));
+		}
+		//Function to stop the map animation 
+		function stopMapAnimation(){
+			if(!animation){
+				return;
+			}
+			
+			animation.remove();
+			animation = null;
+		}
+		
+		//Function to make the map animation fluid
+		function animateMap(startYear){
+			var animating = true; 
+			var yrVal = startYear;
+			
+			var frame = function(timestamp){
+				if(!animating){
+					return;
+				}
+				yrVal += 0.5;
+				if(yrVal > 2019){
+					yrVal = 1900;
+				}
+				animateSlider(yrVal);
 				
-				slider.value = "1900";
-				output.innerHTML = 1900;
-				setYear(1900);
-			}
-			else{
-				year++;
-				slider.value =  year.toString();
-				output.innerHTML = year;
-				setYear(year);
-			}
-			if (flag == 1){
-				idlerMode = setInterval(animateSlider(), 5000);
-			}
-			else if (flag == 0){
-				clearInterval(idleMode);
-			}
-			
+				setTimeout(function(){
+					requestAnimationFrame(frame);
+				}, 1000/30);
+			};
+			frame();
+			return{
+				remove: function(){
+					animating = false;
+				}
+			};	
 		}
 		
-		attachEvent(window, 'load', function(){
-			var idleTime = 10;
-			var idleTimer;
-
-			function resetIdleTimer(){
-				//clearInterval(idleMode)
-				clearTimeout(idleTimer);
-				flag = 0;
-				idleTimer = setTimeout(idleMode,idleTime*1000);
-			}
-			attachEvent(document.body,'mousemove', resetIdleTimer);
-			attachEvent(document.body,'keydown',resetIdleTimer);
-			attachEvent(document.body,'click',resetIdleTimer);
-		
-			resetIdleTimer();
-		})
-	
-		function idleMode(){
-			
-			flag = 1;
-			animateSlider();
-			
-		};
-
-
-
-		function attachEvent(obj,evt,fnc,useCapture){
-			if (obj.addEventListener){
-				obj.addEventListener(evt,fnc,!!useCapture);
-				return true;
-			} 
-			else if (obj.attachEvent){
-				return obj.attachEvent("on"+evt,fnc);
-			}
-	
-		}
 		
 		
 		
@@ -153,6 +184,7 @@ require([
 		}
 		
 		
+		//test button for debugging 
 		//var test = document.getElementById("tstBtn").onclick= function(){
 		//	animateSlider();
 		//}
