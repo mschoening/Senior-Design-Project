@@ -69,6 +69,8 @@ require([
 			var slider = document.getElementById("myRange");
 			var output = document.getElementById("curYear");
 			
+			var idlerMode;
+			
 			var year = parseInt(slider.value);
 			if (year + 1 > 2019){
 				
@@ -82,9 +84,12 @@ require([
 				output.innerHTML = year;
 				setYear(year);
 			}
-			/*while (flag == 1){
-				setTimeout(animateSlider(), 5000);
-			}*/
+			if (flag == 1){
+				idlerMode = setInterval(animateSlider(), 5000);
+			}
+			else if (flag == 0){
+				clearInterval(idleMode);
+			}
 			
 		}
 		
@@ -95,7 +100,7 @@ require([
 			function resetIdleTimer(){
 				//clearInterval(idleMode)
 				clearTimeout(idleTimer);
-				//flag = 0;
+				flag = 0;
 				idleTimer = setTimeout(idleMode,idleTime*1000);
 			}
 			attachEvent(document.body,'mousemove', resetIdleTimer);
@@ -107,7 +112,8 @@ require([
 	
 		function idleMode(){
 			
-			idleModeSet = setInterval(animateSlider(), 1000);
+			flag = 1;
+			animateSlider();
 			
 		};
 
