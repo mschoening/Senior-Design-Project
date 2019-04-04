@@ -1,4 +1,5 @@
 var year;
+var animation = null;
 require([
 	"esri/Map",
 	"esri/Graphic",
@@ -13,7 +14,7 @@ require([
 	function(Map, Graphic, SceneView, FeatureLayer, Home, Search, Polyline, LineSymbol3D, PathSymbol3DLayer) {
 
 		var mosquesUrl =
-        "https://services9.arcgis.com/DC7lz0T9RX9VsXbK/arcgis/rest/services/filtertest/FeatureServer";
+        "https://services9.arcgis.com/DC7lz0T9RX9VsXbK/arcgis/rest/services/finalsorteddata/FeatureServer";
 		
 		var countiesUrl =
 		"https://services9.arcgis.com/DC7lz0T9RX9VsXbK/arcgis/rest/services/counties_v17a/FeatureServer";
@@ -22,7 +23,13 @@ require([
 		"https://services9.arcgis.com/DC7lz0T9RX9VsXbK/arcgis/rest/services/cities_townships/FeatureServer";
 		
 		var connUrl = 
-		"https://services9.arcgis.com/DC7lz0T9RX9VsXbK/arcgis/rest/services/pathstest/FeatureServer";
+		"https://services9.arcgis.com/DC7lz0T9RX9VsXbK/arcgis/rest/services/updatedconn/FeatureServer";
+
+		// height-to-year ratio used by objects that grow from the time slider (how many meters of height for every year)
+		growScale = 10
+		
+		// Z-Scaling Constant: for stretching height of everything in Z-Axis
+		zScale = 10
 
 		// sets extent to the area wanted
 		var greaterDetroit = { // autocasts as new Extent()
@@ -46,12 +53,317 @@ require([
 		function setYear(value){
 			MosquesLayer.renderer = generateRender(value);
 			connLayer.renderer = generateConnRender(value);
+			topSpheresLayer.renderer = generateTopSphereRender(value);
+			topSpheresLayer.elevationInfo = generateSphereHeight(value);
+			
+		}
+		
+		
+		/*******************************************************
+		 * Functions for traversing across the map in idle mode*
+		 *******************************************************/
+		
+		//different cammera views that will iterate through the map. 
+		
+		//camera position 1
+		function cam1(){				
+			view.goTo(
+			{
+				position: {
+					x: -82.920330, // longitude
+					y: 42.220230, //latitude
+					z: 16000, // height of the camera in meters
+				},
+				heading: -45, //position of the camera
+				tilt: 70 // the degree the camera is tilted
+			},			
+			{
+			speedFactor: 2.0,
+			easing: "linear"
+			});
+		}
+		
+		//camera position 2
+		function cam2(){
+			view.goTo(
+			{
+				position: {
+					x: -83.156695,
+					y: 42.681704,
+					z: 16000,
+				},
+				heading: 180,
+				tilt: 70
+			},			
+			{
+			speedFactor: 2.0,
+			easing: "linear"
+			});
+		}
+		
+		//camera position 3
+		function cam3(){
+			view.goTo(
+			{
+				position: {
+					x: -82.920330,
+					y: 42.220230,
+					z: 16000,
+				},
+				heading: -45,
+				tilt: 70
+			},			
+			{
+			speedFactor: 2.0,
+			easing: "linear"
+			});
+		}
+		
+		//camera position 4
+		function cam4(){
+			view.goTo(
+			{
+				position: {
+					x: -82.920330,
+					y: 42.220230,
+					z: 16000,
+				},
+				heading: -45,
+				tilt: 70
+			},			
+			{
+			speedFactor: 2.0,
+			easing: "linear"
+			});
+		}
+		
+		//camera position 5
+		function cam5(){
+			view.goTo(
+			{
+				position: {
+					x: -82.920330,
+					y: 42.220230,
+					z: 16000,
+				},
+				heading: -45,
+				tilt: 70
+			},			
+			{
+			speedFactor: 2.0,
+			easing: "linear"
+			});
+		}
+		
+		//camera position 6
+		function cam6(){
+			view.goTo(
+			{
+				position: {
+					x: -82.920330,
+					y: 42.220230,
+					z: 16000,
+				},
+				heading: -45,
+				tilt: 70
+			},			
+			{
+			speedFactor: 2.0,
+			easing: "linear"
+			});
+		}
+		
+		//camera position 7
+		function cam7(){
+			view.goTo(
+			{
+				position: {
+					x: -82.920330,
+					y: 42.220230,
+					z: 16000,
+				},
+				heading: -45,
+				tilt: 70
+			},			
+			{
+			speedFactor: 2.0,
+			easing: "linear"
+			});
+		}
+		
+		//camera position 8
+		function cam8(){
+			view.goTo(
+			{
+				position: {
+					x: -82.920330,
+					y: 42.220230,
+					z: 16000,
+				},
+				heading: -45,
+				tilt: 70
+			},			
+			{
+			speedFactor: 2.0,
+			easing: "linear"
+			});
+		}
+		
+		//camera position 9
+		function cam9(){
+			view.goTo(
+			{
+				position: {
+					x: -82.920330,
+					y: 42.220230,
+					z: 16000,
+				},
+				heading: -45,
+				tilt: 70
+			},			
+			{
+			speedFactor: 2.0,
+			easing: "linear"
+			});
+		}
+		
+		//camera position 10
+		function cam10(){
+			view.goTo(
+			{
+				position: {
+					x: -82.920330,
+					y: 42.220230,
+					z: 16000,
+				},
+				heading: -45,
+				tilt: 70
+			},			
+			{
+			speedFactor: 2.0,
+			easing: "linear"
+			});
+		}
+		
+		
+		
+		//test button for debugging 
+		var test = document.getElementById("tstBtn").onclick= function(){
+			cam2();
+		}
+		
+		
+		/***************************************************************
+		 * Functions to automatically animate the map during idle mode.*
+		 ***************************************************************/
+		 
+		//Function for automatically animating the map slider		
+		function animateSlider(value){
+			
+			var slider = document.getElementById("myRange");
+			var output = document.getElementById("curYear");
+			
+			output.innerHTML = Math.floor(value);
+			slider.value = Math.floor(value);
+			
+			MosquesLayer.renderer = generateRender(value);
+			connLayer.renderer = generateConnRender(value);
+			topSpheresLayer.renderer = generateTopSphereRender(value);
+			topSpheresLayer.elevationInfo = generateSphereHeight(value);
+		}
+		
+		//Function to set up the inactivity listeners. 	
+		function setInactivityListeners(){
+			this.addEventListener("mousemove", resetInactivityTimer, false);
+			this.addEventListener("mousedown", resetInactivityTimer, false);
+			this.addEventListener("keypress", resetInactivityTimer, false);
+			this.addEventListener("DOMMouseScroll", resetInactivityTimer, false);
+			this.addEventListener("mousewheel", resetInactivityTimer, false);
+			this.addEventListener("touchmove", resetInactivityTimer, false);
+			this.addEventListener("MSPointerMove", resetInactivityTimer, false);
+			
+			startInactivityTimer();
+		}
+		
+		setInactivityListeners();
+		
+		//Function to start the inactivity timer
+		function startInactivityTimer(){
+			timeoutID = window.setTimeout(goInactive, 5000);
+		}
+		
+		//Function to reset the inactivity timer
+		function resetInactivityTimer(e){
+			window.clearTimeout(timeoutID);
+			
+			goActive();
+			
+		}
+		
+		//Function to start the idle mode
+		function goInactive(){
+			startMapAnimation();
+		}
+		
+		//Function to stop the idle mode
+		function goActive(){
+			stopMapAnimation();
+			startInactivityTimer();
+		}
+		
+		//Function to start the map animation
+		function startMapAnimation(){
+			var slider = document.getElementById("myRange");
+			
+			stopMapAnimation();
+			animation = animateMap(parseInt(slider.value));
+		}
+		//Function to stop the map animation 
+		function stopMapAnimation(){
+			if(!animation){
+				return;
+			}
+			
+			animation.remove();
+			animation = null;
+		}
+		
+		//Function to make the map animation fluid
+		function animateMap(startYear){
+			var animating = true; 
+			var yrVal = startYear;
+			
+			var frame = function(timestamp){
+				if(!animating){
+					return;
+				}
+				yrVal += 0.5;
+				if(yrVal > 2019){
+					yrVal = 1900;
+				}
+				animateSlider(yrVal);
+				
+				setTimeout(function(){
+					requestAnimationFrame(frame);
+				}, 1000/30);
+			};
+			frame();
+			return{
+				remove: function(){
+					animating = false;
+				}
+			};	
 		}
 		
 		
 		
 		
-		//Code for switching visibility of highlighted layers. 
+		//Code for switching visibility of highlighted layers.
+		
+		function setDefaultHighlightLayer(){
+			citiesLayer.visible = false;
+			countiesLayer.visible = false;
+		}
 		
 		var defaultMapView = document.getElementById("Type1").onclick= function(){
 			citiesLayer.visible = false;
@@ -67,6 +379,8 @@ require([
 		}
 		
 		
+		
+		
 		/***********************************************************************
 		 *Functions to build the varrious expressions for filtering the map. 
 		 ***********************************************************************/
@@ -74,12 +388,12 @@ require([
 		//function and button for filtering by ethnicity 
 		function EthnicityExpressionBuilder(){
 			var checks = document.getElementsByName("eFilters");
-			var expr ='';
+			var expr ='hasAllFeatures = 1';
 			var flag = 0;
 			for (i=0; i<4; i++){
 				if (checks[i].checked===true){
 					if (flag == 0){
-						expr += "PrimaryEthnicity="+ "'"+checks[i].value + "'";
+						expr += " AND PrimaryEthnicity="+ "'"+checks[i].value + "'";
 						flag = 1;
 					}
 					else{
@@ -92,17 +406,18 @@ require([
 		
 		var ethnicityFltrBtn = document.getElementById("ethnicityFtlrBtn").onclick= function(){
 			MosquesLayer.definitionExpression = EthnicityExpressionBuilder();
+			topSpheresLayer.definitionExpression = EthnicityExpressionBuilder();
 		}
 		
 		//function and button for filtering by city 
 		function CityExpressionBuilder(){
 			var checks = document.getElementsByName("cFilters");
-			var expr ='';
+			var expr ='hasAllFeatures = 1';
 			var flag = 0;
 			for (i=0; i<4; i++){
 				if (checks[i].checked===true){
 					if (flag == 0){
-						expr += "City="+ "'"+checks[i].value + "'";
+						expr += " AND City="+ "'"+checks[i].value + "'";
 						flag = 1;
 					}
 					else{
@@ -115,17 +430,18 @@ require([
 		
 		var cityFltrBtn = document.getElementById("cityFtlrBtn").onclick= function(){
 			MosquesLayer.definitionExpression = CityExpressionBuilder();
+			topSpheresLayer.definitionExpression = CityExpressionBuilder();
 		}
 		
 		//function and button for filtering by county 
 		function CountyExpressionBuilder(){
 			var checks = document.getElementsByName("CoFilters");
-			var expr ='';
+			var expr ='hasAllFeatures = 1';
 			var flag = 0;
 			for (i=0; i<4; i++){
 				if (checks[i].checked===true){
 					if (flag == 0){
-						expr += "County="+ "'"+checks[i].value + "'";
+						expr += " AND County="+ "'"+checks[i].value + "'";
 						flag = 1;
 					}
 					else{
@@ -138,17 +454,22 @@ require([
 		
 		var countyFltrBtn = document.getElementById("countyFtlrBtn").onclick= function(){
 			MosquesLayer.definitionExpression = CountyExpressionBuilder();
+			topSpheresLayer.definitionExpression = CountyExpressionBuilder();
 		}
 		
-		
-      /**************************************************
-       * Renderer for symbolizing mosques on time axis
-       **************************************************/
+		/***********************************************************
+		 *Functions for rendering the different layers on the map
+		 **********************************************************/
+      
+		//Renderer for symbolizing mosques on time axis
 		function generateRender(year){
-			//var testOutput = document.getElementById("hlModeLbl");
+			//var testOutput = document.getElementById("debugTxt");
 			
-			var growExp = "return (" + year + "-$feature.OpenDate)*10";
-			//testOutput.innerHTML=String(growExp);
+			//Dwight: visualVariables.valueExpression must be a number! (no strings)
+			var fieldPkr = "When($feature.Cdate <= " + year + ",1, $feature.Odate <= " + year +" && $feature.Cdate > " + year + ",2,  $feature.Odate > " + year + ", 3, 4)"; // need to change this to CDate and ODate when data is updated 		
+			
+			var growExp2 = "IIf (" + year + ">= $feature.Cdate,$feature.Closedate-$feature.Odate,"+ year + "-$feature.Odate)*" + growScale * zScale; // need to change this to CDate and ODate when data is updated 
+			//testOutput.innerHTML=String(growExp2);
 			return{
 				type: "simple", // autocasts as new SimpleRenderer()
 				symbol: {
@@ -165,37 +486,55 @@ require([
 						width: 60
 					}]
 				},
-		//signifies variables that can be changed via data
+				//signifies variables that can be changed via data
 				visualVariables: [{
 					type: "size",
-					valueExpression: growExp,
-					//valueExpression: "When($feature.CloseDate<year, ($feature.CloseDate-$feature.OpenDate)*10, $feature.CloseDate>year,(year-$feature.OpenDate)*10)", expression for calculating height based on open date and close date
+					valueExpression: growExp2, 
 					axis: "height",
 					valueUnit: "meters"
 				}, 
+				//code that controls what color the mosques turn based on the time slider.
 				{
 					type: "color",
-					field: "OpenDate",
+					valueExpression: fieldPkr,//change this to oDate when new data is done
 					stops: [{
-						value: year-1,
-						color: {
-							r: 245,
-							g: 41,
-							b: 235,
-							a: 1
-						}
-					},
-					{
-						value: year+1,
+						value: 3,
 						color: {
 							r: 245,
 							g: 41,
 							b: 235,
 							a: 0
+						}, 
+					},
+					{
+						value: 2,
+						color: {
+							r: 245,
+							g: 41,
+							b: 235,
+							a: 1
+						},
+					},
+					{
+						value: 1,
+						color: {
+							r: 23,
+							g: 173,
+							b: 178,
+							a: 0.5
+						},
+					},
+					{
+						value: 4,
+						color: {
+							r: 255,
+							g: 102,
+							b: 0,
+							a: 1
 						},
 					}]
+					
 				},
-		
 				{
 					type: "size",
 					axis: "width",
@@ -204,9 +543,84 @@ require([
 			}
 		};
 		
-		/***************************************
-		* Function for generating connections. *
-		****************************************/
+		//Function for generating the top spheres. 
+		
+		function generateTopSphereRender(year){
+			var fieldPkr = "When($feature.Cdate <= " + year + ",1, $feature.Odate <= " + year +" && $feature.Cdate > " + year + ",2,  $feature.Odate > " + year + ", 3, 4)"; // need to change this to CDate and ODate when data is updated 		
+			
+			//testOutput.innerHTML=String(growExp2);
+			return{
+				type: "simple", // autocasts as new SimpleRenderer()
+				symbol: {
+					type: "point-3d", // autocasts as new PointSymbol3D()
+					symbolLayers: [{
+						type: "object", // autocasts as new ObjectSymbol3DLayer()
+						resource: {
+							primitive: "sphere"
+						},			
+						anchor: "bottom", // Dwight: Was 'Bottom', changed to 'bottom' (Threw error beforehand)
+						width: 160
+					}]
+				},
+				//signifies variables that can be changed via data
+				visualVariables: [{
+					type: "color",
+					valueExpression: fieldPkr,
+					stops: [{
+						value: 3,
+						color: {
+							r: 245,
+							g: 41,
+							b: 235,
+							a: 0
+						}, 
+					},
+					{
+						value: 2,
+						color: {
+							r: 245,
+							g: 41,
+							b: 235,
+							a: 1
+						},
+					},
+					{
+						value: 1,
+						color: {
+							r: 23,
+							g: 173,
+							b: 178,
+							a: 0.5
+						},
+					},
+					{
+						value: 4,
+						color: {
+							r: 255,
+							g: 102,
+							b: 0,
+							a: 1
+						},
+					}]
+					
+				}]
+			}
+		};
+		
+		//Function to generate top shpere height
+		
+		function generateSphereHeight(year){
+			genHeight = "IIf (" + year + ">= $feature.Cdate, ($feature.z * " + zScale + ") + (($feature.Closedate-$feature.Odate) * " + (growScale * zScale) + ") - 5, ($feature.z * " + zScale + " ) + (("+ year + "-$feature.Odate)*" + (growScale * zScale) + ") - 5)";
+			return{
+				
+				mode: "relative-to-ground",
+				featureExpressionInfo:{
+					expression: genHeight
+				}	
+			}
+		};
+		
+		//Function for generating connections layer.
 		function generateConnRender(year){
 			
 			return {
@@ -223,7 +637,7 @@ require([
 				},
 				visualVariables: [{
 					type: "color",
-					field: "ConYear",
+					field: "StartDate",
 					stops: [{
 						value: year-1,
 						color: {
@@ -245,9 +659,10 @@ require([
 				}]
 				
 			}	
-		}
+		};
 		
-		/*var mosquesSurfaceRenderer = {
+		//Renderer for the layer showing mosques on the surface.
+		var mosquesSurfaceRenderer = {
 			type: "simple", // autocasts as new SimpleRenderer()
 			symbol: {
 				type: "point-3d", // autocasts as new PointSymbol3D()
@@ -262,8 +677,9 @@ require([
 					size: 4
 				}]
 			}
-		};*/
+		};
 		
+		//Renderer for the layer showing the county highlights. 
 		var countiesRenderer = {
 			type: "simple", // autocasts as new SimpleRenderer()
 			symbol: {
@@ -273,10 +689,12 @@ require([
 					48,
 					50,
 					92,
-					.5
+					0.5
 				],
 			}	
-		}
+		};
+		
+		//Renderer for the layer showing the city highlights 
 		var citiesRenderer = {
 			type: "simple", // autocasts as new SimpleRenderer()
 			symbol: {
@@ -286,10 +704,10 @@ require([
 					48,
 					50,
 					92,
-					.5
+					0.5
 				],
 			}	
-		}
+		};
 	  
 	  /**************************************************
        * mosque popup template
@@ -300,35 +718,48 @@ require([
 		   "<b>Open Date:</b> {OpenDate}<br>"+
 		   "<b>Close Date:</b> {CloseDate}<br>"+ 
 		   "<b>Primary Ethnicity:</b> {PrimaryEthnicity}<br>"+
-		   "<a href={Link} rel='modal:open'>Click Here To Learn More</a>"
+		   "<a href='ExpandedInfo.php?id={Link}' rel='modal:open'><button>Tap Here To Learn More</button></a>"
 		 };
 
-      /**************************************************
-       * Layers depicting mosques
-       **************************************************/
+
+      /***********************************************************************
+       * Code that sets up the layers with the previously defined renderers. 
+       **********************************************************************/
 
       // Layer for depicting mosques on time axis
 		var MosquesLayer = new FeatureLayer({
 			url: mosquesUrl,
-			definitionExpression: "",
+			definitionExpression: "hasAllFeatures = 1",
 			outFields: ["*"],
 			popupTemplate: mosqueTemplate,
 			returnZ: true,
 			elevationInfo: {
 				mode: "relative-to-ground",
 				featureExpressionInfo:{
-					expression: "Geometry($feature).z + $feature.z"
+					//expression: "Geometry($feature).z + $feature.z" //Dwight: Is Geometry() necessary?
+					expression: "$feature.z * " + zScale
 				}
 			},
 			unit: "meters"
-		});   
+		});
 		
+		//Layer for depecting top spheres. 
+		var topSpheresLayer = new FeatureLayer({
+			url: mosquesUrl,
+			definitionExpression: "hasAllFeatures = 1",
+			outFields: ["*"],
+			popupTemplate: mosqueTemplate,
+			returnZ: true
+		});
+		
+		// Layer for depecting county highlighting. 
 		var countiesLayer = new FeatureLayer({
 			url: countiesUrl,
 			outFields: ["*"],
 			renderer: countiesRenderer,	
 		});
 		
+		// Layer for depecting city highlighting. 
 		var citiesLayer = new FeatureLayer({
 			url: citiesUrl,
 			outFields: ["*"],
@@ -336,6 +767,7 @@ require([
 			
 		});
 		
+		// Layer for depecting connections between mosques. 
 		var connLayer = new FeatureLayer({
 			url: connUrl,
 			definitionExpression: "",
@@ -345,11 +777,23 @@ require([
 				mode: "relative-to-ground",
 				offset: 0,
 				featureExpressionInfo: {
-					expression: "$feature.z"
+					expression: "$feature.z * " + zScale
 				}
 				
 			},
 			unit: "meters"
+		});
+		
+		// Layer for depecting mosques on the ground. 
+		var mosquesSurfaceLayer = new FeatureLayer({
+			url: mosquesUrl,
+			definitionExpression: "",
+			outFields: ["*"],
+			popupTemplate: mosqueTemplate,
+			renderer: mosquesSurfaceRenderer,
+			elevationInfo: {
+				mode: "on-the-ground"
+			}
 		});
 
       /********************************************************************
@@ -358,7 +802,7 @@ require([
        ********************************************************************/
 		var map = new Map({
 			basemap: "dark-gray",
-			layers: [MosquesLayer, countiesLayer, citiesLayer, connLayer],
+			layers: [MosquesLayer, countiesLayer, citiesLayer, connLayer, mosquesSurfaceLayer,topSpheresLayer],
 			ground: {
 				navigationConstraint: {
 					type: "stay-above" //Dwight: Changed 'stayAbove' to 'stay-above' (threw error beforehand)
@@ -366,6 +810,7 @@ require([
 			}
 		});
 		setYear(1900);
+		setDefaultHighlightLayer();
 
       /********************************************************************
        * Create a local scene 
@@ -405,9 +850,9 @@ require([
 				searchFields:["Name","Address"],
 				displayField: "Name",
 				exactMatch: false,
-				outFields: ["Name","Address","OpenDate","CloseDate","PrimaryEthnicity","link"],
+				outFields: ["Name","Address","OpenDate","CloseDate","PrimaryEthnicity","Link"],
 				name: "sampleName",
-				placeholder: "exampletxt",
+				placeholder: "Search",
 			}]
 		}, SearchTB);
 		
@@ -427,13 +872,13 @@ function openTab(evt, tName){
 	tabcontent = document.getElementsByClassName("tabcontent");
 	for (i = 0; i < tabcontent.length; i++) {
 		tabcontent[i].style.display = "none";
-  }
+	}
 
   // Get all elements with class="tablinks" and remove the class "active"
 	tablinks = document.getElementsByClassName("tablinks");
 	for (i = 0; i < tablinks.length; i++) {
 		tablinks[i].className = tablinks[i].className.replace(" active", "");
-  }
+	}
 
   // Show the current tab, and add an "active" class to the button that opened the tab
 	document.getElementById(tName).style.display = "block";
@@ -459,8 +904,6 @@ function setForm(val){
 	}
 };
 
-
-
 //function for updating time slider year label 
 function updateYear(){
 	var slider = document.getElementById("myRange");
@@ -469,4 +912,10 @@ function updateYear(){
 	output.innerHTML = year;
 	//setYear(year);
 };
+
+
+
+
+
+
 
