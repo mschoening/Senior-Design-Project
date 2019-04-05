@@ -102,112 +102,112 @@ require([
 		}
 		
 		//camera position 3
-		function cam3(){
-			view.goTo(
-			{
-				position: {
-					x: -82.920330,
-					y: 42.220230,
-					z: 16000,
-				},
-				heading: -45,
-				tilt: 70
-			},			
-			{
-			speedFactor: 2.0,
-			easing: "linear"
-			});
-		}
+		function cam3(){                
+            view.goTo(
+            {
+                position: {
+                    x: -83.554663, // longitude
+                    y: 42.474764, //latitude
+                    z: 16000, // height of the camera in meters
+                },
+                heading: 180, //position of the camera
+                tilt: 70 // the degree the camera is tilted
+            },            
+            {
+            speedFactor: 2.0,
+            easing: "linear"
+            });
+        }
 		
 		//camera position 4
-		function cam4(){
-			view.goTo(
-			{
-				position: {
-					x: -82.920330,
-					y: 42.220230,
-					z: 16000,
-				},
-				heading: -45,
-				tilt: 70
-			},			
-			{
-			speedFactor: 2.0,
-			easing: "linear"
-			});
-		}
+		function cam4(){                
+            view.goTo(
+            {
+                position: {
+                    x: -84.028566, // longitude
+                    y: 42.438681, //latitude
+                    z: 16000, // height of the camera in meters
+                },
+                heading: 135, //position of the camera
+                tilt: 70 // the degree the camera is tilted
+            },            
+            {
+            speedFactor: 2.0,
+            easing: "linear"
+            });
+        }
 		
 		//camera position 5
-		function cam5(){
-			view.goTo(
-			{
-				position: {
-					x: -82.920330,
-					y: 42.220230,
-					z: 16000,
-				},
-				heading: -45,
-				tilt: 70
-			},			
-			{
-			speedFactor: 2.0,
-			easing: "linear"
-			});
-		}
+		function cam5(){                
+            view.goTo(
+            {
+                position: {
+                    x: -84.110340, // longitude
+                    y: 42.246328, //latitude
+                    z: 16000, // height of the camera in meters
+                },
+                heading: 90, //position of the camera
+                tilt: 70 // the degree the camera is tilted
+            },            
+            {
+            speedFactor: 2.0,
+            easing: "linear"
+            });
+        }
 		
 		//camera position 6
-		function cam6(){
-			view.goTo(
-			{
-				position: {
-					x: -82.920330,
-					y: 42.220230,
-					z: 16000,
-				},
-				heading: -45,
-				tilt: 70
-			},			
-			{
-			speedFactor: 2.0,
-			easing: "linear"
-			});
-		}
+		function cam6(){                
+            view.goTo(
+            {
+                position: {
+                    x: -83.931748, // longitude
+                    y: 42.044514, //latitude
+                    z: 16000, // height of the camera in meters
+                },
+                heading: 45, //position of the camera
+                tilt: 70 // the degree the camera is tilted
+            },            
+            {
+            speedFactor: 2.0,
+            easing: "linear"
+            });
+        }
 		
 		//camera position 7
-		function cam7(){
-			view.goTo(
-			{
-				position: {
-					x: -82.920330,
-					y: 42.220230,
-					z: 16000,
-				},
-				heading: -45,
-				tilt: 70
-			},			
-			{
-			speedFactor: 2.0,
-			easing: "linear"
-			});
-		}
+		function cam7(){                
+            view.goTo(
+            {
+                position: {
+                    x: -83.495449, // longitude
+                    y: 41.853995, //latitude
+                    z: 16000, // height of the camera in meters
+                },
+                heading: 0, //position of the camera
+                tilt: 70 // the degree the camera is tilted
+            },            
+            {
+            speedFactor: 2.0,
+            easing: "linear"
+            });
+        }
 		
 		//camera position 8
-		function cam8(){
-			view.goTo(
-			{
-				position: {
-					x: -82.920330,
-					y: 42.220230,
-					z: 16000,
-				},
-				heading: -45,
-				tilt: 70
-			},			
-			{
-			speedFactor: 2.0,
-			easing: "linear"
-			});
-		}
+		function cam8(){                
+            view.goTo(
+            {
+                position: {
+                    x: -83.171166, // longitude
+                    y: 42.019295, //latitude
+                    z: 16000, // height of the camera in meters
+                },
+                heading: 315, //position of the camera
+                tilt: 70 // the degree the camera is tilted
+            },            
+            {
+            speedFactor: 2.0,
+            easing: "linear"
+            });
+        }
 		
 		//camera position 9
 		function cam9(){
@@ -249,7 +249,7 @@ require([
 		
 		//test button for debugging 
 		var test = document.getElementById("tstBtn").onclick= function(){
-			cam2();
+			cam4();
 		}
 		
 		
