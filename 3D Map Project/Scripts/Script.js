@@ -1,5 +1,7 @@
 var year;
 var animation = null;
+var prevRand;
+var randCamIdle;
 require([
 	"esri/Map",
 	"esri/Graphic",
@@ -78,7 +80,7 @@ require([
 				tilt: 70 // the degree the camera is tilted
 			},			
 			{
-			speedFactor: 2.0,
+			speedFactor: 1.0,
 			easing: "linear"
 			});
 		}
@@ -96,7 +98,7 @@ require([
 				tilt: 70
 			},			
 			{
-			speedFactor: 2.0,
+			speedFactor: 1.0,
 			easing: "linear"
 			});
 		}
@@ -114,7 +116,7 @@ require([
                 tilt: 70 // the degree the camera is tilted
             },            
             {
-            speedFactor: 2.0,
+            speedFactor: 1.0,
             easing: "linear"
             });
         }
@@ -132,7 +134,7 @@ require([
                 tilt: 70 // the degree the camera is tilted
             },            
             {
-            speedFactor: 2.0,
+            speedFactor: 1.0,
             easing: "linear"
             });
         }
@@ -150,7 +152,7 @@ require([
                 tilt: 70 // the degree the camera is tilted
             },            
             {
-            speedFactor: 2.0,
+            speedFactor: 1.0,
             easing: "linear"
             });
         }
@@ -168,7 +170,7 @@ require([
                 tilt: 70 // the degree the camera is tilted
             },            
             {
-            speedFactor: 2.0,
+            speedFactor: 1.0,
             easing: "linear"
             });
         }
@@ -186,7 +188,7 @@ require([
                 tilt: 70 // the degree the camera is tilted
             },            
             {
-            speedFactor: 2.0,
+            speedFactor: 1.0,
             easing: "linear"
             });
         }
@@ -204,7 +206,7 @@ require([
                 tilt: 70 // the degree the camera is tilted
             },            
             {
-            speedFactor: 2.0,
+            speedFactor: 1.0,
             easing: "linear"
             });
         }
@@ -222,7 +224,7 @@ require([
 				tilt: 70
 			},			
 			{
-			speedFactor: 2.0,
+			speedFactor: 1.0,
 			easing: "linear"
 			});
 		}
@@ -240,16 +242,64 @@ require([
 				tilt: 70
 			},			
 			{
-			speedFactor: 2.0,
+			speedFactor: 1.0,
 			easing: "linear"
 			});
+		}
+		
+		//Code for randomly jumping to a camera postition. 
+		function randCam(){
+			
+			var random = Math.floor(Math.random() * 10)+1;
+			if (random == prevRand){
+				randCam();
+			}
+			else{
+				prevRand = random
+				
+				switch (random){
+				case 1:
+					cam1();
+					break;
+				case 2:
+					cam2();
+					break;
+				case 3:
+					cam3();
+					break;
+				case 4:
+					cam4();
+					break;
+				case 5:
+					cam5();
+					break;
+				case 6:
+					cam6();
+					break;
+				case 7:
+					cam7();
+					break;
+				case 8:
+					cam8();
+					break;
+				case 9:
+					cam9();
+					break;
+				case 10:
+					cam10();
+					break;
+				default:
+					break;
+				}
+			}
+			
 		}
 		
 		
 		
 		//test button for debugging 
 		var test = document.getElementById("tstBtn").onclick= function(){
-			cam4();
+			randCam();
 		}
 		
 		
@@ -295,14 +345,16 @@ require([
 		//Function to reset the inactivity timer
 		function resetInactivityTimer(e){
 			window.clearTimeout(timeoutID);
-			
 			goActive();
 			
 		}
 		
-		//Function to start the idle mode
+		//Function to start the idle mode. Resets the filters any selected highlight layer. 
 		function goInactive(){
-			startMapAnimation();
+			setDefaultHighlightLayer();
+			setDefaultConnVisibility();
+			resetFilters();
+			startMapAnimation();			
 		}
 		
 		//Function to stop the idle mode
@@ -315,15 +367,19 @@ require([
 		function startMapAnimation(){
 			var slider = document.getElementById("myRange");
 			
+			randCam(); //call random cam to start
+			
 			stopMapAnimation();
 			animation = animateMap(parseInt(slider.value));
+			randCamIdle = window.setInterval(function(){randCam();},10000);//set interval for the random cam function. 
+			
 		}
 		//Function to stop the map animation 
 		function stopMapAnimation(){
 			if(!animation){
 				return;
 			}
-			
+			window.clearInterval(randCamIdle);//clear interval for random cam function. 
 			animation.remove();
 			animation = null;
 		}
@@ -355,14 +411,16 @@ require([
 			};	
 		}
 		
-		
-		
+		/*******************************************
+		 * Code for switching visibility of layers *
+		 *******************************************/
 		
 		//Code for switching visibility of highlighted layers.
 		
 		function setDefaultHighlightLayer(){
 			citiesLayer.visible = false;
 			countiesLayer.visible = false;
+			document.getElementById("Type1").checked = true;
 		}
 		
 		var defaultMapView = document.getElementById("Type1").onclick= function(){
@@ -378,6 +436,21 @@ require([
 			countiesLayer.visible = false;
 		}
 		
+		//Code for switching visibility of layers
+		
+		function setDefaultConnVisibility(){
+			document.getElementById("toggleConnLayer").checked = true;
+			connLayer.visible = true;
+		}
+		
+		var connectionVisibility = document.getElementById("toggleConnLayer").onclick= function(){
+			if (document.getElementById("toggleConnLayer").checked == true){
+				connLayer.visible = true;
+			}
+			else{
+				connLayer.visible = false;
+			}
+		}
 		
 		
 		
@@ -457,6 +530,12 @@ require([
 			topSpheresLayer.definitionExpression = CountyExpressionBuilder();
 		}
 		
+		//function to reset the filters for use in idle mode. 
+		function resetFilters(){
+			MosquesLayer.definitionExpression = 'hasAllFeatures = 1';
+			topSpheresLayer.definitionExpression = 'hasAllFeatures = 1';
+		}
+		
 		/***********************************************************
 		 *Functions for rendering the different layers on the map
 		 **********************************************************/
@@ -509,18 +588,18 @@ require([
 					{
 						value: 2,
 						color: {
-							r: 245,
-							g: 41,
-							b: 235,
+							r: 38,
+							g: 196,
+							b: 165,
 							a: 1
 						},
 					},
 					{
 						value: 1,
 						color: {
-							r: 23,
-							g: 173,
-							b: 178,
+							r: 224,
+							g: 35,
+							b: 48,
 							a: 0.5
 						},
 					},
@@ -578,18 +657,18 @@ require([
 					{
 						value: 2,
 						color: {
-							r: 245,
-							g: 41,
-							b: 235,
+							r: 38,
+							g: 196,
+							b: 165,
 							a: 1
 						},
 					},
 					{
 						value: 1,
 						color: {
-							r: 23,
-							g: 173,
-							b: 178,
+							r: 224,
+							g: 35,
+							b: 48,
 							a: 0.5
 						},
 					},
@@ -641,9 +720,9 @@ require([
 					stops: [{
 						value: year-1,
 						color: {
-							r: 255,
-							g: 0,
-							b: 0,
+							r: 96,
+							g: 43,
+							b: 175,
 							a: 1,
 						}
 					},
@@ -686,10 +765,10 @@ require([
 				type: "simple-fill", // autocasts as new PointSymbol3D()
 				style: "solid",
 				color:[
-					48,
-					50,
-					92,
-					0.5
+					120,
+					62,
+					46,
+					0.3
 				],
 			}	
 		};
@@ -701,10 +780,10 @@ require([
 				type: "simple-fill", // autocasts as new PointSymbol3D()
 				style: "solid",
 				color:[
-					48,
-					50,
-					92,
-					0.5
+					120,
+					62,
+					46,
+					0.3
 				],
 			}	
 		};
