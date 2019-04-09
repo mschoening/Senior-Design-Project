@@ -108,51 +108,51 @@ require([
             view.goTo(
             {
                 position: {
-                    x: -83.554663, // longitude
-                    y: 42.474764, //latitude
+                    x: -82.952076, // longitude
+                    y: 42.551539, //latitude
                     z: 16000, // height of the camera in meters
                 },
-                heading: 180, //position of the camera
+                heading: 225, //position of the camera
                 tilt: 70 // the degree the camera is tilted
             },            
             {
-            speedFactor: 1.0,
+            speedFactor: 2.0,
             easing: "linear"
             });
         }
 		
 		//camera position 4
 		function cam4(){                
-            view.goTo(
+			view.goTo(
             {
                 position: {
-                    x: -84.028566, // longitude
-                    y: 42.438681, //latitude
+                    x: -83.166321, // longitude
+                    y: 42.606604, //latitude
                     z: 16000, // height of the camera in meters
                 },
-                heading: 135, //position of the camera
+                heading: 180, //position of the camera
                 tilt: 70 // the degree the camera is tilted
             },            
             {
-            speedFactor: 1.0,
+            speedFactor: 2.0,
             easing: "linear"
             });
         }
 		
 		//camera position 5
 		function cam5(){                
-            view.goTo(
+			view.goTo(
             {
                 position: {
-                    x: -84.110340, // longitude
-                    y: 42.246328, //latitude
+                    x: -83.342158, // longitude
+                    y: 42.550726, //latitude
                     z: 16000, // height of the camera in meters
                 },
-                heading: 90, //position of the camera
+                heading: 135, //position of the camera
                 tilt: 70 // the degree the camera is tilted
             },            
             {
-            speedFactor: 1.0,
+            speedFactor: 2.0,
             easing: "linear"
             });
         }
@@ -162,33 +162,33 @@ require([
             view.goTo(
             {
                 position: {
-                    x: -83.931748, // longitude
-                    y: 42.044514, //latitude
+                    x: -83.422176, // longitude
+                    y: 42.415132, //latitude
                     z: 16000, // height of the camera in meters
                 },
-                heading: 45, //position of the camera
+                heading: 90, //position of the camera
                 tilt: 70 // the degree the camera is tilted
             },            
             {
-            speedFactor: 1.0,
+            speedFactor: 2.0,
             easing: "linear"
             });
         }
 		
 		//camera position 7
 		function cam7(){                
-            view.goTo(
+             view.goTo(
             {
                 position: {
-                    x: -83.495449, // longitude
-                    y: 41.853995, //latitude
+                    x: -83.336255, // longitude
+                    y: 42.280141, //latitude
                     z: 16000, // height of the camera in meters
                 },
-                heading: 0, //position of the camera
+                heading: 45, //position of the camera
                 tilt: 70 // the degree the camera is tilted
             },            
             {
-            speedFactor: 1.0,
+            speedFactor: 2.0,
             easing: "linear"
             });
         }
@@ -198,15 +198,15 @@ require([
             view.goTo(
             {
                 position: {
-                    x: -83.171166, // longitude
-                    y: 42.019295, //latitude
+                    x: -83.133262, // longitude
+                    y: 42.220915, //latitude
                     z: 16000, // height of the camera in meters
                 },
-                heading: 315, //position of the camera
+                heading: 0, //position of the camera
                 tilt: 70 // the degree the camera is tilted
             },            
             {
-            speedFactor: 1.0,
+            speedFactor: 2.0,
             easing: "linear"
             });
         }
