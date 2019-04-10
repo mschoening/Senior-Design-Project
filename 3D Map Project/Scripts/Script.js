@@ -1,6 +1,7 @@
 var year;
 var animation = null;
 var prevRand;
+var prevRandVisited;
 var randCamIdle;
 require([
 	"esri/Map",
@@ -81,7 +82,7 @@ require([
 			},			
 			{
 			speedFactor: 1.0,
-			easing: "linear"
+			easing: randEasing()
 			});
 		}
 		
@@ -99,7 +100,7 @@ require([
 			},			
 			{
 			speedFactor: 1.0,
-			easing: "linear"
+			easing: randEasing()
 			});
 		}
 		
@@ -116,8 +117,8 @@ require([
                 tilt: 70 // the degree the camera is tilted
             },            
             {
-            speedFactor: 2.0,
-            easing: "linear"
+            speedFactor: 1.0,
+            easing: randEasing()
             });
         }
 		
@@ -134,8 +135,8 @@ require([
                 tilt: 70 // the degree the camera is tilted
             },            
             {
-            speedFactor: 2.0,
-            easing: "linear"
+            speedFactor: 1.0,
+            easing: randEasing()
             });
         }
 		
@@ -152,8 +153,8 @@ require([
                 tilt: 70 // the degree the camera is tilted
             },            
             {
-            speedFactor: 2.0,
-            easing: "linear"
+            speedFactor: 1.0,
+            easing: randEasing()
             });
         }
 		
@@ -170,8 +171,8 @@ require([
                 tilt: 70 // the degree the camera is tilted
             },            
             {
-            speedFactor: 2.0,
-            easing: "linear"
+            speedFactor: 1.0,
+            easing: randEasing()
             });
         }
 		
@@ -180,16 +181,16 @@ require([
              view.goTo(
             {
                 position: {
-                    x: -83.336255, // longitude
-                    y: 42.280141, //latitude
-                    z: 16000, // height of the camera in meters
+                    x: -83.459913, // longitude
+                    y: 42.172792, //latitude
+                    z: 10000, // height of the camera in meters
                 },
                 heading: 45, //position of the camera
-                tilt: 70 // the degree the camera is tilted
+                tilt: 90 // the degree the camera is tilted
             },            
             {
-            speedFactor: 2.0,
-            easing: "linear"
+            speedFactor: 2.5,//slow
+            easing: randEasing()
             });
         }
 		
@@ -198,35 +199,36 @@ require([
             view.goTo(
             {
                 position: {
-                    x: -83.133262, // longitude
-                    y: 42.220915, //latitude
-                    z: 16000, // height of the camera in meters
+                    x: -83.151326, // longitude
+                    y: 42.041369, //latitude
+                    z: 9500, // height of the camera in meters
                 },
                 heading: 0, //position of the camera
-                tilt: 70 // the degree the camera is tilted
+                tilt: 90 // the degree the camera is tilted
             },            
             {
-            speedFactor: 2.0,
-            easing: "linear"
+            speedFactor: 2.5,//slow 
+            easing: randEasing()
             });
         }
 		
 		//camera position 9
 		function cam9(){
 			view.goTo(
-			{
-				position: {
-					x: -82.920330,
-					y: 42.220230,
-					z: 16000,
-				},
-				heading: -45,
-				tilt: 70
-			},			
-			{
-			speedFactor: 1.0,
-			easing: "linear"
-			});
+            {
+                position: {
+                    x: -82.664885, // longitude
+                    y: 42.422033, //latitude
+                    z: 36000, // height of the camera in meters
+                },
+                heading: 270, //position of the camera
+                tilt: 60, // the degree the camera is tilted
+				
+            },            
+            {
+            speedFactor: 1.0,
+            easing: randEasing()
+            });
 		}
 		
 		//camera position 10
@@ -234,28 +236,73 @@ require([
 			view.goTo(
 			{
 				position: {
-					x: -82.920330,
-					y: 42.220230,
-					z: 16000,
+					x: -83.146202,
+					y: 42.377410,
+					z: 55000,
 				},
-				heading: -45,
-				tilt: 70
+				heading: 0,
+				tilt: 0
 			},			
 			{
 			speedFactor: 1.0,
-			easing: "linear"
+			easing: randEasing()
 			});
+		}
+		
+		//function for a custom easing animation (bounces). 
+		function customEasing(t) {
+          return (
+            1 -
+            Math.abs(Math.sin(-1.7 + t * 4.5 * Math.PI)) * Math.pow(0.5, t * 10)
+          );
+        }
+		
+		//function to pick a random easing animation.
+		function randEasing(){
+			var random = Math.floor(Math.random() * 9)+1;
+			switch(random){
+				case 1:
+					return "in-cubic";
+					break;
+				case 2:
+					return "linear";
+					break;
+				case 3:
+					return "out-cubic";
+					break;
+				case 4:
+					return "in-out-cubic";
+					break;
+				case 5:
+					return "in-expo";
+					break;
+				case 6:
+					return "out-expo";
+					break;
+				case 7:
+					return "in-out-expo";
+					break;
+				case 8:
+					return "in-out-coast-quadratic";
+					break;
+				case 9:
+					return customEasing;
+					break;
+				default:
+					break;
+			}
 		}
 		
 		//Code for randomly jumping to a camera postition. 
 		function randCam(){
 			
 			var random = Math.floor(Math.random() * 10)+1;
-			if (random == prevRand){
+			if (random == prevRand || random == prevRandVisited){
 				randCam();
 			}
 			else{
-				prevRand = random
+				prevRand = random;
+				prevRandVisited = random;
 				
 				switch (random){
 				case 1:
@@ -298,9 +345,9 @@ require([
 		
 		
 		//test button for debugging 
-		var test = document.getElementById("tstBtn").onclick= function(){
+		/*var test = document.getElementById("tstBtn").onclick= function(){
 			randCam();
-		}
+		}*/
 		
 		
 		/***************************************************************
