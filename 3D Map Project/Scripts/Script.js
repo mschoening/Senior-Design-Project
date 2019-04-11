@@ -34,12 +34,34 @@ require([
 		// Z-Scaling Constant: for stretching height of everything in Z-Axis
 		zScale = 10
 
-		// sets extent to the area wanted
+		// sets extent to the area wanted(old extent)
 		var greaterDetroit = { // autocasts as new Extent()
 			xmax:-9158073.232901145,
 			xmin:-9424685.587559769,
 			ymax:5372805.56336561,
 			ymin:5125761.087947986,
+			spatialReference: { // autocasts as new SpatialReference()
+				wkid: 3857
+			}
+		};	
+		
+		//Future restriction on map navigation. 
+		/*var navigationExtent = { // autocasts as new Extent()
+			xmax:-8487567.620783783,
+			xmin:-10429679.635453025,
+			ymax:6273310.19359302,
+			ymin:4654068.186400277,
+			spatialReference: { // autocasts as new SpatialReference()
+				wkid: 3857
+			}
+		};*/	
+		
+		// sets extent to the area wanted
+		var greaterDetroit2 = { // autocasts as new Extent()
+			xmax:-9179475.600820862,
+			xmin:-9328069.183807237,
+			ymax:5358206.090963218,
+			ymin:5186375.65137815,
 			spatialReference: { // autocasts as new SpatialReference()
 				wkid: 3857
 			}
@@ -189,7 +211,7 @@ require([
                 tilt: 90 // the degree the camera is tilted
             },            
             {
-            speedFactor: 2.5,//slow
+            speedFactor: 1.0, //2.5,slow
             easing: randEasing()
             });
         }
@@ -207,7 +229,7 @@ require([
                 tilt: 90 // the degree the camera is tilted
             },            
             {
-            speedFactor: 2.5,//slow 
+            speedFactor: 1.0, //2.5,slow 
             easing: randEasing()
             });
         }
@@ -398,6 +420,7 @@ require([
 		
 		//Function to start the idle mode. Resets the filters any selected highlight layer. 
 		function goInactive(){
+			document.getElementById("defaultOpen").click()
 			setDefaultHighlightLayer();
 			setDefaultConnVisibility();
 			resetFilters();
@@ -757,7 +780,12 @@ require([
 						type: "path",
 						size: 50,
 						material:{
-							color: "red"
+							color:{
+								r: 96,
+								g: 43,
+								b: 175,
+								a: 1,
+							}
 						}
 					}]
 				},
@@ -765,6 +793,15 @@ require([
 					type: "color",
 					field: "StartDate",
 					stops: [{
+						value: year,
+						color: {
+							r: 96,
+							g: 43,
+							b: 175,
+							a: 1,
+						}
+					},
+					{
 						value: year-1,
 						color: {
 							r: 96,
@@ -946,8 +983,8 @@ require([
 			map: map,
 			// Indicates to create a local scene
 			viewingMode: "local",
-			clippingArea: greaterDetroit,
-			extent: greaterDetroit,
+			clippingArea: greaterDetroit2,
+			extent: greaterDetroit2,
 			environment: {
 				atmosphere: null,
 				starsEnabled: false
