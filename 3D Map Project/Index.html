@@ -31,9 +31,14 @@
 			<input type="range" min="1900" max="2018" value="1900" class="slider" id="myRange" oninput="updateYear()">
 			<h2 id="curYear">1900</h2>
 			<h4>Map Highlight Mode</h4>
-			<input type="radio" name="Type" id="Type1" value="Default" checked="checked"> Default
-			<input type="radio" name="Type" id="Type2" value="Counties"> Counties
-			<input type="radio" name="Type" id="Type3" value="Cities"> Cities
+			<div class="highlightModeField">
+				<input type="radio" name="Type" id="Type1" value="Default" checked="checked">
+				<label for="Type1">Default</label>
+				<input type="radio" name="Type" id="Type2" value="Counties">
+				<label for="Type2">Counties</label>
+				<input type="radio" name="Type" id="Type3" value="Cities">
+				<label for="Type3">Cities</label>
+			</div>
 			<!--input type="button" id="tstBtn" value="test"-->
 			<h4>Toggle Connection Layer</h4>
 			<label class="switch">

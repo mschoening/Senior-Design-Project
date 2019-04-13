@@ -132,7 +132,7 @@
 }
 
 input:checked + .sldrSwitch {
-  background-color: #1daf2c;
+  background-color: #26C4A5;
 }
 
 input:focus + .sldrSwitch {
@@ -154,9 +154,6 @@ input:checked + .sldrSwitch:before {
     float:left;
 }
 
-#ckBx label {
-  
-}
 
 #ckBx label span {
     text-align:center;
@@ -170,14 +167,10 @@ input:checked + .sldrSwitch:before {
 }
 
 #ckBx input:checked + span {
-    background-color:#1daf2c;
-    
+    background-color: #26C4A5;
+	outline:none;
 }
-#cityFtlrBtn{
-	position:absolute;
-	right: 26%;
-	bottom: 0;
-}
+
 
 #ftlrSelect{
 	
@@ -191,7 +184,7 @@ input:checked + .sldrSwitch:before {
 	position:absolute;
 	right: 26%;
 	bottom: 0;
-	background-color: #ccc; /* Green */
+	background-color: #ccc;
 	border: none;
 	padding: 15px 32px;
 	text-align: center;
@@ -200,5 +193,36 @@ input:checked + .sldrSwitch:before {
 	font-size: 16px;
 }
 
+.highlightModeField {
+	
+}
+
+.highlightModeField input {
+	position: absolute;
+	
+	height: 1px;
+	width: 1px;
+	border: 0;
+	overflow: hidden;
+}
+
+.highlightModeField label {
+	background-color: #ccc;
+	line-height: 1;
+	text-align: center;
+	padding: 8px 16px;
+	margin-right: -1px;
+	border: 1px solid black;
+	
+}
+
+.highlightModeField input:checked + label {
+	background-color: #26C4A5;
+	box-shadow: none;
+}
+
+.highlightModeField label {
+	border-radius: 4px;
+}
 
 

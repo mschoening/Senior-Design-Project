@@ -641,8 +641,25 @@ require([
 		
 		//function to reset the filters for use in idle mode. 
 		function resetFilters(){
+			resetCheckBoxes();
 			MosquesLayer.definitionExpression = 'hasAllFeatures = 1';
 			topSpheresLayer.definitionExpression = 'hasAllFeatures = 1';
+		}
+		
+		function resetCheckBoxes(){
+			var checksCo = document.getElementsByName("CoFilters");
+			var checksC = document.getElementsByName("cFilters");
+			var checksE = document.getElementsByName("eFilters");
+
+			for (i=0; i<checksCo.length; i++){
+				checksCo[i].checked = false;
+			}
+			for (i=0; i<checksC.length; i++){
+				checksC[i].checked = false;
+			}
+			for (i=0; i<checksE.length; i++){
+				checksE[i].checked = false;
+			}
 		}
 		
 		/***********************************************************
