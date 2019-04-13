@@ -1,8 +1,7 @@
 var year;
 var animation = null;
-var prevRand;
-var prevRandVisited;
 var randCamIdle;
+var camArr = [1,2,3,4,5,6,7,8,9,10];
 require([
 	"esri/Map",
 	"esri/Graphic",
@@ -318,15 +317,14 @@ require([
 		//Code for randomly jumping to a camera postition. 
 		function randCam(){
 			
-			var random = Math.floor(Math.random() * 10)+1;
-			if (random == prevRand || random == prevRandVisited){
-				randCam();
-			}
-			else{
-				prevRand = random;
-				prevRandVisited = random;
+			if (camArr === undefined || camArr.length == 0){
+				//refresh the array 
+				camArr = [1,2,3,4,5,6,7,8,9,10];
 				
-				switch (random){
+				var random = Math.floor(Math.random() * camArr.length);
+				var randElement = camArr[random];
+			
+				switch (randElement){
 				case 1:
 					cam1();
 					break;
@@ -360,11 +358,52 @@ require([
 				default:
 					break;
 				}
+				
+				camArr.splice(random,1);
 			}
+			else{
+				
+				var random = Math.floor(Math.random() * camArr.length);
+				var randElement = camArr[random];
 			
-		}
-		
-		
+				switch (randElement){
+				case 1:
+					cam1();
+					break;
+				case 2:
+					cam2();
+					break;
+				case 3:
+					cam3();
+					break;
+				case 4:
+					cam4();
+					break;
+				case 5:
+					cam5();
+					break;
+				case 6:
+					cam6();
+					break;
+				case 7:
+					cam7();
+					break;
+				case 8:
+					cam8();
+					break;
+				case 9:
+					cam9();
+					break;
+				case 10:
+					cam10();
+					break;
+				default:
+					break;
+				}
+				
+				camArr.splice(random,1);
+			}
+		}	
 		
 		//test button for debugging 
 		/*var test = document.getElementById("tstBtn").onclick= function(){
@@ -441,8 +480,7 @@ require([
 			
 			stopMapAnimation();
 			animation = animateMap(parseInt(slider.value));
-			randCamIdle = window.setInterval(function(){randCam();},10000);//set interval for the random cam function. 
-			
+			randCamIdle = window.setInterval(function(){randCam();},10000);//set interval for the random cam function. Currently 10 seconds					
 		}
 		//Function to stop the map animation 
 		function stopMapAnimation(){
@@ -533,14 +571,14 @@ require([
 			var checks = document.getElementsByName("eFilters");
 			var expr ='hasAllFeatures = 1';
 			var flag = 0;
-			for (i=0; i<4; i++){
+			for (i=0; i<checks.length; i++){
 				if (checks[i].checked===true){
 					if (flag == 0){
 						expr += " AND PrimaryEthnicity="+ "'"+checks[i].value + "'";
 						flag = 1;
 					}
 					else{
-						expr += " OR " +"PrimaryEthnicity="+ "'"+checks[i].value + "'";
+						expr += " OR " +"hasAllFeatures = 1 AND PrimaryEthnicity="+ "'"+checks[i].value + "'";
 					}
 				}
 			}
@@ -557,14 +595,14 @@ require([
 			var checks = document.getElementsByName("cFilters");
 			var expr ='hasAllFeatures = 1';
 			var flag = 0;
-			for (i=0; i<4; i++){
+			for (i=0; i<checks.length; i++){
 				if (checks[i].checked===true){
 					if (flag == 0){
 						expr += " AND City="+ "'"+checks[i].value + "'";
 						flag = 1;
 					}
 					else{
-						expr += " OR " +"City="+ "'"+checks[i].value + "'";
+						expr += " OR " +"hasAllFeatures = 1 AND City="+ "'"+checks[i].value + "'";
 					}
 				}
 			}
@@ -581,14 +619,14 @@ require([
 			var checks = document.getElementsByName("CoFilters");
 			var expr ='hasAllFeatures = 1';
 			var flag = 0;
-			for (i=0; i<4; i++){
+			for (i=0; i<checks.length; i++){
 				if (checks[i].checked===true){
 					if (flag == 0){
-						expr += " AND County="+ "'"+checks[i].value + "'";
+						expr += "AND County="+ "'"+checks[i].value + "'";
 						flag = 1;
 					}
 					else{
-						expr += " OR " +"County="+ "'"+checks[i].value + "'";
+						expr += " OR "+"hasAllFeatures = 1 AND County="+ "'"+checks[i].value + "'";
 					}
 				}
 			}
@@ -598,6 +636,7 @@ require([
 		var countyFltrBtn = document.getElementById("countyFtlrBtn").onclick= function(){
 			MosquesLayer.definitionExpression = CountyExpressionBuilder();
 			topSpheresLayer.definitionExpression = CountyExpressionBuilder();
+			//document.getElementById("debugTxt").innerHTML = CountyExpressionBuilder();
 		}
 		
 		//function to reset the filters for use in idle mode. 
