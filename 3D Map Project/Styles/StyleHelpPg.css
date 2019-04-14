@@ -1,0 +1,31 @@
+.centerBtn{
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 40%;
+	height: 10%;
+	margin-bottom: 10px;
+	
+}
+.center {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: auto;
+}
+figure{
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: auto%;
+}
+figure img{
+	vertical-align: top;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 50%;
+}
+figure figcaption{
+	text-align: center;
+}
