@@ -307,7 +307,7 @@ require([
 					return "in-out-coast-quadratic";
 					break;
 				case 9:
-					return customEasing;
+					return "out-expo";//customEasing;
 					break;
 				default:
 					break;
