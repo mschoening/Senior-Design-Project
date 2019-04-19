@@ -447,7 +447,7 @@ require([
 		
 		//Function to start the inactivity timer
 		function startInactivityTimer(){
-			timeoutID = window.setTimeout(goInactive, 5000);
+			timeoutID = window.setTimeout(goInactive, 10000);//timer for starting inactivity mode. currently at 10 seconds. 
 		}
 		
 		//Function to reset the inactivity timer
@@ -480,7 +480,7 @@ require([
 			
 			stopMapAnimation();
 			animation = animateMap(parseInt(slider.value));
-			randCamIdle = window.setInterval(function(){randCam();},10000);//set interval for the random cam function. Currently 10 seconds					
+			randCamIdle = window.setInterval(function(){randCam();},20000);//set interval for the random cam function. Currently 10 seconds					
 		}
 		//Function to stop the map animation 
 		function stopMapAnimation(){
