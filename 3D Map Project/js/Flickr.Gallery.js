@@ -287,6 +287,22 @@
                         prty.closeViewBox(settings); 
 					}
 				});
+				$(document).on("swipeleft", function () {
+					if(prty.prevBtn.is(':visible')){
+						prty.activeEl = prevItem;
+                        //Change media
+                        prty.changeSlide(settings, '+=');
+                    }
+                });
+
+                $(document).on("swiperight", function () {
+                    if(prty.nextBtn.is(':visible')){
+						prty.activeEl = nextItem;
+                        //Change media
+                        prty.changeSlide(settings, '-=');
+
+                    }
+                });
         },
         //Change slide
         changeSlide: function(settings, direction){  
