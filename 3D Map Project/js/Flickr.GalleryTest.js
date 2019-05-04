@@ -29,7 +29,7 @@
             //FLICKR user ID
             User: '21853641@N03',
             //Flickr PhotoSet ID
-            PhotoSet: photo_id, //Dwight: defined in 'ExpandedInfo.php' with inline JS
+            PhotoSet: '72157674361260277', //Dwight: defined in 'ExpandedInfo.php' with inline JS
             /*-- VIEWBOX SETTINGS --*/ 
 			Speed		: 400,		//Speed of animations
             navigation	: 1,		//(true) Navigation (arrows)
@@ -296,8 +296,8 @@
 					startY,
 					distX,
 					distY,
-					threshold = 100, //required min distance traveled to be considered swipe
-					restraint = 200, // maximum distance allowed at the same time in perpendicular direction
+					threshold = 150, //required min distance traveled to be considered swipe
+					restraint = 100, // maximum distance allowed at the same time in perpendicular direction
 					allowedTime = 500, // maximum time allowed to travel that distance
 					elapsedTime,
 					startTime,
