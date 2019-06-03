@@ -703,7 +703,7 @@ require([
 					type: "color",
 					valueExpression: fieldPkr,//change this to oDate when new data is done
 					stops: [{
-						value: 3,
+						value: 3, // not open location
 						color: {
 							r: 245,
 							g: 41,
@@ -712,7 +712,7 @@ require([
 						}, 
 					},
 					{
-						value: 2,
+						value: 2, // Open location
 						color: {
 							r: 38,
 							g: 196,
@@ -721,16 +721,16 @@ require([
 						},
 					},
 					{
-						value: 1,
+						value: 1, // closed location
 						color: {
-							r: 224,
-							g: 35,
-							b: 48,
+							r: 244,
+							g: 71,
+							b: 80,
 							a: 0.5
 						},
 					},
 					{
-						value: 4,
+						value: 4, //Other
 						color: {
 							r: 255,
 							g: 102,
@@ -772,7 +772,7 @@ require([
 					type: "color",
 					valueExpression: fieldPkr,
 					stops: [{
-						value: 3,
+						value: 3, // not open location
 						color: {
 							r: 245,
 							g: 41,
@@ -781,7 +781,7 @@ require([
 						}, 
 					},
 					{
-						value: 2,
+						value: 2, // Open location
 						color: {
 							r: 38,
 							g: 196,
@@ -790,16 +790,16 @@ require([
 						},
 					},
 					{
-						value: 1,
+						value: 1, // closed location
 						color: {
-							r: 224,
-							g: 35,
-							b: 48,
+							r: 244,
+							g: 71,
+							b: 80,
 							a: 0.5
 						},
 					},
 					{
-						value: 4,
+						value: 4, //Other
 						color: {
 							r: 255,
 							g: 102,
@@ -836,10 +836,10 @@ require([
 						type: "path",
 						size: 50,
 						material:{
-							color:{
-								r: 96,
-								g: 43,
-								b: 175,
+							color:{ //start purple
+								r: 186,
+								g: 47,
+								b: 120,
 								a: 1,
 							}
 						}
@@ -851,23 +851,23 @@ require([
 					stops: [{
 						value: year,
 						color: {
-							r: 96,
-							g: 43,
-							b: 175,
+							r: 186,
+							g: 47,
+							b: 120,
 							a: 1,
 						}
 					},
 					{
-						value: year-1,
+						value: year-1, //connection visible
 						color: {
-							r: 96,
-							g: 43,
-							b: 175,
+							r: 186,
+							g: 47,
+							b: 120,
 							a: 1,
 						}
 					},
 					{
-						value: year+1,
+						value: year+1, //connection not visible
 						color: {
 							r: 255,
 							g: 0,
