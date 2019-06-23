@@ -1,3 +1,14 @@
+@font-face {
+	font-family: 'century-gothic-bold';
+	src: url('Fonts/century-gothic-bold.eot');
+	src: url('Fonts/century-gothic-bold.ttf') format('truetype'),
+		 url('Fonts/century-gothic-bold.woff') format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+body{
+	font-family: 'century-gothic-bold';
+}
 .centerBtn{
 	display: block;
 	margin-left: auto;

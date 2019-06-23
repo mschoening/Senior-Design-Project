@@ -307,7 +307,7 @@ require([
 					return "in-out-coast-quadratic";
 					break;
 				case 9:
-					return "out-expo";//customEasing;
+					return "out-expo";
 					break;
 				default:
 					break;
@@ -905,9 +905,9 @@ require([
 				type: "simple-fill", // autocasts as new PointSymbol3D()
 				style: "solid",
 				color:[
-					120,
-					62,
-					46,
+					49,
+					86,
+					219,
 					0.3
 				],
 			}	
@@ -920,9 +920,9 @@ require([
 				type: "simple-fill", // autocasts as new PointSymbol3D()
 				style: "solid",
 				color:[
-					120,
-					62,
-					46,
+					49,
+					86,
+					219,
 					0.3
 				],
 			}	

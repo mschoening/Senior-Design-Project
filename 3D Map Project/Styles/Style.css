@@ -1,5 +1,15 @@
+ @font-face {
+	font-family: 'century-gothic-bold';
+	src: url('Fonts/century-gothic-bold.eot');
+	src: url('Fonts/century-gothic-bold.ttf') format('truetype'),
+		 url('Fonts/century-gothic-bold.woff') format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+ 
  html,
- body,
+ body, 
+
  #viewDiv {
 	padding: 0;
     margin: 0;
@@ -15,11 +25,13 @@
     position: absolute;
 }
 #filterOptions{
+	font-family: 'century-gothic-bold'; 
 	position: fixed;
 	bottom: 0;
 	left: 0;
 }
 .tab {
+  font-family: 'century-gothic-bold'; 
   overflow: hidden;
   border: 1px solid #ccc;
   background-color: #7e838c;
@@ -32,6 +44,7 @@
  
 }
 .tab button {
+  font-family: 'century-gothic-bold'; 
   background-color: inherit;
   float: left;
   border: none;
@@ -60,6 +73,7 @@
 }
 
 .slider {
+  font-family: 'century-gothic-bold'; 
   -webkit-appearance: slider-vertical;  /* Override default CSS styles */
   appearance: none;
   align: center; 
@@ -82,13 +96,16 @@
   cursor: pointer; /* Cursor on hover */
 }
 #curYear {
+	font-family: 'century-gothic-bold'; 
 	text-align: center;
 }
 #hlModeLbl {
+	font-family: 'century-gothic-bold'; 
 	padding-left: 10px;
 }
 
 #SearchTB {
+	font-family: 'century-gothic-bold'; 
 	width: 19.54%;
 	height: 80%;
 	background-color: #7e838c;
@@ -156,6 +173,7 @@ input:checked + .sldrSwitch:before {
 
 
 #ckBx label span {
+	font-family: 'century-gothic-bold'; 
     text-align:center;
     padding:3px 3px;
     display:block;
@@ -163,17 +181,19 @@ input:checked + .sldrSwitch:before {
 }
 
 #ckBx label input {
+	font-family: 'century-gothic-bold'; 
     position:absolute; 
 }
 
 #ckBx input:checked + span {
+	font-family: 'century-gothic-bold'; 
     background-color: #26C4A5;
 	outline:none;
 }
 
 
 #ftlrSelect{
-	
+	font-family: 'century-gothic-bold'; 
 	right: 28%;
 	margin-bottom: 10px;
 	border-radius: 4px;
@@ -181,6 +201,7 @@ input:checked + .sldrSwitch:before {
 }
 
 .ftlrBtn {
+	font-family: 'century-gothic-bold'; 
 	position:absolute;
 	right: 26%;
 	bottom: 0;
@@ -199,7 +220,7 @@ input:checked + .sldrSwitch:before {
 
 .highlightModeField input {
 	position: absolute;
-	
+	font-family: 'century-gothic-bold'; 
 	height: 1px;
 	width: 1px;
 	border: 0;
@@ -207,6 +228,7 @@ input:checked + .sldrSwitch:before {
 }
 
 .highlightModeField label {
+	font-family: 'century-gothic-bold'; 
 	background-color: #ccc;
 	line-height: 1;
 	text-align: center;
@@ -217,11 +239,13 @@ input:checked + .sldrSwitch:before {
 }
 
 .highlightModeField input:checked + label {
+	font-family: 'century-gothic-bold'; 
 	background-color: #26C4A5;
 	box-shadow: none;
 }
 
 .highlightModeField label {
+	font-family: 'century-gothic-bold'; 
 	border-radius: 4px;
 }
 
