@@ -90,7 +90,7 @@ if ($mosque != NULL)
         <script src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js'></script>
         <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>  
         <script type="text/javascript" src="js/jquery-ui.min.js"></script>
-        <link rel="stylesheet" type="text/css" href="style.css" />  
+        <link rel="stylesheet" type="text/css" href="Styles/styleExpandedInfo.css" />  
         <link href='http://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
     </head>
 <?php if ($mosque == NULL): ?>

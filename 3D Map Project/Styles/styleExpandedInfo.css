@@ -1,4 +1,14 @@
 @charset "utf-8";
+
+ @font-face {
+	font-family: 'century-gothic-bold';
+	src: url('Fonts/century-gothic-bold.eot');
+	src: url('Fonts/century-gothic-bold.ttf') format('truetype'),
+		 url('Fonts/century-gothic-bold.woff') format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
 /* reset marginesów oraz dopełnień 
 html, body, ul, li { margin: 0; padding: 6px; line-height: 1.2em;}
 br {line-height:8px; margin:0px;}*/
@@ -31,11 +41,13 @@ h3 a {
 }
 /* CONTENT */ 
 .content {
+	font-family: 'century-gothic-bold';
 	position:relative; 
 	width:100%;   
 	margin:0 auto; 
 }
 .content p {
+	font-family: 'century-gothic-bold';
 	margin-bottom: 10px;
 	font-size:14px;
 	line-height: 20px;
