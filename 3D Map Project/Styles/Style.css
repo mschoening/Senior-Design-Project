@@ -24,6 +24,12 @@
     z-index: 35;
     position: absolute;
 }
+h4{
+	font-family: 'century-gothic-bold';
+}
+p{
+	font-family: 'century-gothic-bold';
+} 
 #filterOptions{
 	font-family: 'century-gothic-bold'; 
 	position: fixed;
