@@ -67,6 +67,10 @@ if ($mosque != NULL)
     $full_desc      = $mosque['fullDesc'];
     $history        = $mosque['history'];
     $album_id       = $mosque['albumId'];
+	$f_book     	= $mosque['fBook'];
+	$insta	        = $mosque['insta'];
+	$lara	        = $mosque['lara'];
+	$f_members      = $mosque['fMembers'];
 
     /* reformat dates for easier reading */
 
@@ -143,6 +147,21 @@ if ($mosque != NULL)
         <?php if ($website): ?>
         <h3 id="web">Website: <?php echo $website; ?></h3>
         <?php endif; ?>
+		
+		<!-- Facebook Page -->
+        <?php if ($f_book): ?>
+        <h3 id="web">Facebook Page: <?php echo $f_book; ?></h3>
+        <?php endif; ?>
+		
+		<!-- Instagram Page -->
+        <?php if ($insta): ?>
+        <h3 id="web">Instagram Page: <?php echo $insta; ?></h3>
+        <?php endif; ?>
+		
+		<!-- LARA Link -->
+        <?php if ($lara): ?>
+        <h3 id="web">LARA Link: <?php echo $lara; ?></h3>
+        <?php endif; ?>
 
         <!-- Ethnicity -->
         <?php if ($ethnicity): ?>
@@ -162,6 +181,11 @@ if ($mosque != NULL)
         <!-- Succeded By -->
         <?php if ($succedes): ?>
         <h3 id="succ">Succeded by: <?php echo $succedes; ?></h3>
+        <?php endif; ?>
+		
+		<!-- Founding Members -->		
+		<?php if ($f_members): ?>
+        <h3 id="succ">Founding Members: <?php echo $f_members; ?></h3>
         <?php endif; ?>
 
         <!-- Full Description -->
