@@ -673,7 +673,7 @@ require([
 			//Dwight: visualVariables.valueExpression must be a number! (no strings)
 			var fieldPkr = "When($feature.Cdate <= " + year + ",1, $feature.Odate <= " + year +" && $feature.Cdate > " + year + ",2,  $feature.Odate > " + year + ", 3, 4)"; // need to change this to CDate and ODate when data is updated 		
 			
-			var growExp2 = "IIf (" + year + ">= $feature.Cdate,$feature.Closedate-$feature.Odate,"+ year + "-$feature.Odate)*" + growScale * zScale; // need to change this to CDate and ODate when data is updated 
+			var growExp2 = "IIf (" +year+ ">= $feature.Cdate,($feature.Cdate-$feature.Odate)*" +growScale * zScale+",("+ year + "-$feature.Odate)*" + growScale * zScale+")"; // need to change this to CDate and ODate when data is updated 
 			//testOutput.innerHTML=String(growExp2);
 			return{
 				type: "simple", // autocasts as new SimpleRenderer()
@@ -815,7 +815,7 @@ require([
 		//Function to generate top shpere height
 		
 		function generateSphereHeight(year){
-			genHeight = "IIf (" + year + ">= $feature.Cdate, ($feature.z * " + zScale + ") + (($feature.Closedate-$feature.Odate) * " + (growScale * zScale) + ") - 5, ($feature.z * " + zScale + " ) + (("+ year + "-$feature.Odate)*" + (growScale * zScale) + ") - 5)";
+			genHeight = "IIf (" + year + ">= $feature.Cdate, ($feature.z * " + zScale + ") + (($feature.Cdate-$feature.Odate) * " + (growScale * zScale) + ") - 5, ($feature.z * " + zScale + " ) + (("+ year + "-$feature.Odate)*" + (growScale * zScale) + ") - 5)";
 			return{
 				
 				mode: "relative-to-ground",
