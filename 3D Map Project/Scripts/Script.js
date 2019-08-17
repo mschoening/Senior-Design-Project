@@ -16,7 +16,7 @@ require([
 	function(Map, Graphic, SceneView, FeatureLayer, Home, Search, Polyline, LineSymbol3D, PathSymbol3DLayer) {
 
 		var mosquesUrl =
-        "https://services9.arcgis.com/DC7lz0T9RX9VsXbK/arcgis/rest/services/finalsorteddata/FeatureServer";
+        "https://services9.arcgis.com/DC7lz0T9RX9VsXbK/arcgis/rest/services/updatedsorteddata8_17_19/FeatureServer";
 		
 		var countiesUrl =
 		"https://services9.arcgis.com/DC7lz0T9RX9VsXbK/arcgis/rest/services/counties_v17a/FeatureServer";
@@ -25,7 +25,7 @@ require([
 		"https://services9.arcgis.com/DC7lz0T9RX9VsXbK/arcgis/rest/services/cities_townships/FeatureServer";
 		
 		var connUrl = 
-		"https://services9.arcgis.com/DC7lz0T9RX9VsXbK/arcgis/rest/services/updatedconn/FeatureServer";
+		"https://services9.arcgis.com/DC7lz0T9RX9VsXbK/arcgis/rest/services/connectionsupdated8_17_19/FeatureServer";
 
 		// height-to-year ratio used by objects that grow from the time slider (how many meters of height for every year)
 		growScale = 10
@@ -932,7 +932,7 @@ require([
        * mosque popup template
        **************************************************/
 		var mosqueTemplate = {
-		 title:"{Name}",
+		 title:"{Mosque}",
 		 content: "<b>Address:</b> {Address}<br>"+
 		   "<b>Open Date:</b> {OpenDate}<br>"+
 		   "<b>Close Date:</b> {CloseDate}<br>"+ 
@@ -1066,10 +1066,10 @@ require([
 					url: mosquesUrl,
 					popupTemplate: mosqueTemplate,
 				},
-				searchFields:["Name","Address"],
-				displayField: "Name",
+				searchFields:["Mosque","Address"],
+				displayField: "Mosque",
 				exactMatch: false,
-				outFields: ["Name","Address","OpenDate","CloseDate","PrimaryEthnicity","Link"],
+				outFields: ["Mosque","Address","OpenDate","CloseDate","PrimaryEthnicity","Link"],
 				name: "sampleName",
 				placeholder: "Search",
 			}]
