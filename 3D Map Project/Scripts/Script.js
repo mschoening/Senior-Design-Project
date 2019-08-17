@@ -932,7 +932,7 @@ require([
        * mosque popup template
        **************************************************/
 		var mosqueTemplate = {
-		 title:"{Mosque}",
+		 title:"{Name}",
 		 content: "<b>Address:</b> {Address}<br>"+
 		   "<b>Open Date:</b> {OpenDate}<br>"+
 		   "<b>Close Date:</b> {CloseDate}<br>"+ 
@@ -1066,10 +1066,10 @@ require([
 					url: mosquesUrl,
 					popupTemplate: mosqueTemplate,
 				},
-				searchFields:["Mosque","Address"],
-				displayField: "Mosque",
+				searchFields:["Name","Address"],
+				displayField: "Name",
 				exactMatch: false,
-				outFields: ["Mosque","Address","OpenDate","CloseDate","PrimaryEthnicity","Link"],
+				outFields: ["Name","Address","OpenDate","CloseDate","PrimaryEthnicity","Link"],
 				name: "sampleName",
 				placeholder: "Search",
 			}]
