@@ -56,3 +56,32 @@ h3 a {
 .content h1{
 	font-family: 'century-gothic-bold';
 }
+p{
+	font-family: 'century-gothic-bold';
+	margin-bottom: 10px;
+	font-size:14px;
+	line-height: 20px;
+	color: #454545;
+}
+
+h1{
+	font-family: 'century-gothic-bold';
+	margin-bottom: 10px;
+	font-size:14px;
+	line-height: 20px;
+	color: #454545;
+}
+h2{
+	font-family: 'century-gothic-bold';
+	margin-bottom: 10px;
+	font-size:14px;
+	line-height: 20px;
+	color: #454545;
+}
+h3{
+	font-family: 'century-gothic-bold';
+	margin-bottom: 10px;
+	font-size:14px;
+	line-height: 20px;
+	color: #454545;
+}
