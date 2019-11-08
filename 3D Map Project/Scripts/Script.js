@@ -16,7 +16,7 @@ require([
 	function(Map, Graphic, SceneView, FeatureLayer, Home, Search, Polyline, LineSymbol3D, PathSymbol3DLayer) {
 
 		var mosquesUrl =
-        "https://services9.arcgis.com/DC7lz0T9RX9VsXbK/arcgis/rest/services/updatedsorteddata8_17_19/FeatureServer";
+        "https://services9.arcgis.com/DC7lz0T9RX9VsXbK/arcgis/rest/services/updatedsorteddata11_8_19/FeatureServer";
 		
 		var countiesUrl =
 		"https://services9.arcgis.com/DC7lz0T9RX9VsXbK/arcgis/rest/services/counties_v17a/FeatureServer";
@@ -25,7 +25,7 @@ require([
 		"https://services9.arcgis.com/DC7lz0T9RX9VsXbK/arcgis/rest/services/cities_townships/FeatureServer";
 		
 		var connUrl = 
-		"https://services9.arcgis.com/DC7lz0T9RX9VsXbK/arcgis/rest/services/connectionsupdated8_17_19/FeatureServer";
+		"https://services9.arcgis.com/DC7lz0T9RX9VsXbK/arcgis/rest/services/connectionsupdated11_8_19/FeatureServer";
 
 		// height-to-year ratio used by objects that grow from the time slider (how many meters of height for every year)
 		growScale = 10
