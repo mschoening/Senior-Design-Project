@@ -447,7 +447,7 @@ require([
 		
 		//Function to start the inactivity timer
 		function startInactivityTimer(){
-			timeoutID = window.setTimeout(goInactive, 1000000);//timer for starting inactivity mode. currently at 10 seconds. 
+			timeoutID = window.setTimeout(goInactive, 130000);//timer for starting inactivity mode. currently at 10 seconds. 
 		}
 		
 		//Function to reset the inactivity timer
