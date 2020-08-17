@@ -14,7 +14,7 @@
 	padding: 0;
     margin: 0;
     height: 100%;
-    width: 93%;
+    width:  100%;/*was 93%;*/
 	float: right;
 }
 
@@ -80,27 +80,29 @@ p{
 
 .slider {
   font-family: 'century-gothic-bold'; 
-  -webkit-appearance: slider-vertical;  /* Override default CSS styles */
-  appearance: none;
+  writing-mode: bt-lr;
+  -webkit-appearance: slider-vertical; /* Override default CSS styles */
+  appearance: slider-vertical; /*for new css on chrome this controls it*/
   align: center; 
   width: 100%; /* Full-width */
-  height: 70%; /* Specified height */
+  height: 60%; /* Specified height */
   background: #7e838c; /* Grey background */
   outline: none; /* Remove outline */
   opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
   -webkit-transition: .2s; /* 0.2 seconds transition on hover */
   transition: opacity .2s;
+  orient="vertical";
 }
-
 
 .slider::-webkit-slider-thumb {
   -webkit-appearance: none; /* Override default look */
   appearance: none;
   width: 25px; /* Set a specific slider handle width */
   height: 25px; /* Slider handle height */
-  background: #4CAF50; /* Green background */
+  background: #26C4A5; /* Green background */
   cursor: pointer; /* Cursor on hover */
 }
+
 #curYear {
 	font-family: 'century-gothic-bold'; 
 	text-align: center;

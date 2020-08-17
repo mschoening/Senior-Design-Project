@@ -9,6 +9,7 @@ require([
     "esri/layers/FeatureLayer",
     "esri/widgets/Home",
 	"esri/widgets/Search",
+	//"esri/widgets/BasemapToggle",
 	"esri/geometry/Polyline",
 	"esri/symbols/LineSymbol3D",
 	"esri/symbols/PathSymbol3DLayer"
@@ -560,6 +561,38 @@ require([
 			}
 		}
 		
+		/*/Code for switching to darkmode
+		var toggleDarkmode=document.getElementById("toggleDarkMode").onclick= function(){
+			if (document.getElementById("toggleDarkMode").checked == true){
+				var basemapToggle = new basemapToggle({
+					view: view, 
+					secondMap: "gray"
+				});
+			}
+		}
+		
+		/*document.getElementById("toggleDarkMode").onclick= function(){
+			if(document.getElementById("toggleDarkMode").checked == true){
+				var basemapToggle = new basemapToggle({
+					view: view,
+					secondMap: "gray"
+				});
+			}
+			//else{
+				//var basemapToggle = new basemapToggle({
+			//		view: view,
+				//	secondMap: "gray"
+				//})
+				//Map.setBasemap(gray);
+			}
+			//map.setBasemap("name_of_the_basemap");
+		}
+		
+		
+		//var basemapToggle = new basemapToggle({
+			//view: view,
+			//secondMap: "gray"
+		//})*/
 		
 		
 		/***********************************************************************
@@ -1017,7 +1050,7 @@ require([
 
       /********************************************************************
        * Create a map with the above defined layers and a topographic
-       * basemap
+       * basemap original "dark-gray"
        ********************************************************************/
 		var map = new Map({
 			basemap: "dark-gray",
@@ -1030,7 +1063,7 @@ require([
 		});
 		setYear(1900);
 		setDefaultHighlightLayer();
-
+		
       /********************************************************************
        * Create a local scene 
        ********************************************************************/
@@ -1075,6 +1108,19 @@ require([
 			}]
 		}, SearchTB);
 		
+		/*/Code for switching to darkmode
+		function darkMode(){
+			document.getElementById("toggleDarkMode").onclick= function(){
+				if(document.getElementById("toggleDarkMode").checked == true){
+					map.map.setBasemap("dark-gray");
+				}
+				else{
+					map.map.setBasemap("gray");
+				}
+				//map.setBasemap("name_of_the_basemap");
+			}
+		}*/
+		
 	}
 );
 
@@ -1103,6 +1149,7 @@ function openTab(evt, tName){
 	document.getElementById(tName).style.display = "block";
 	evt.currentTarget.className += " active";
 };
+
 
 //function for switching between filter options. 
 function setForm(val){
